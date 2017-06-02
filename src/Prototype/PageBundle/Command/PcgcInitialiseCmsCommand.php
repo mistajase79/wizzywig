@@ -55,7 +55,7 @@ class PcgcInitialiseCmsCommand extends ContainerAwareCommand
         $user->setIsActive(1);
         $user->setRoles(array('ROLE_DEVELOPER'));
         $setPassAs = '$W;fD4kf(>4?';
-        $password = $this->getContainer()->get('security.password_encoder')->encodePassword($user, 'abcde');
+        $password = $this->getContainer()->get('security.password_encoder')->encodePassword($user, $setPassAs);
         $user->setPassword($password);
         $em->persist($user);
         //$em->flush();
