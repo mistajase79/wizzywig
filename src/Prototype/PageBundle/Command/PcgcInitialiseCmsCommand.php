@@ -17,6 +17,7 @@ use Prototype\PageBundle\Entity\Page;
 use Prototype\PageBundle\Entity\Templates;
 use Prototype\MenuBundle\Entity\Menu;
 use Prototype\MenuBundle\Entity\MenuItems;
+use Prototype\PageBundle\Entity\Locales;
 
 class PcgcInitialiseCmsCommand extends ContainerAwareCommand
 {
@@ -153,6 +154,26 @@ class PcgcInitialiseCmsCommand extends ContainerAwareCommand
         $em->persist($menuitem);
 
         $output->writeln('MenuItem: Home Added');
+
+        $locale= new Locales();
+        $locale->setLocale('fr');
+        $locale->setLanguage('Français');
+        $locale->setActive(true);
+        $em->persist($locale);
+
+        $locale= new Locales();
+        $locale->setLocale('de');
+        $locale->setLanguage('Deutsche');
+        $locale->setActive(true);
+        $em->persist($locale);
+
+        $locale= new Locales();
+        $locale->setLocale('es');
+        $locale->setLanguage('Espanol');
+        $locale->setActive(true);
+        $em->persist($locale);
+
+        $output->writeln('Default Locales: fr, de, es Added');
 
         $em->flush();
 
