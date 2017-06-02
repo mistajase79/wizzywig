@@ -1,0 +1,13 @@
+{% extends '@theme/base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+  <h1>Password Reset</h1>
+  {% if error %}
+      <div>{{ error.message }}</div>
+  {% endif %}
+
+  <form action="{{ path('password_reset', {'url_encrypt': url_encrypt }) }}" method="post">
+      {{form_row(form.plainPassword)}}
+      <input type="submit" value="Reset" />
+  {{ form_end(form) }}
+{% endblock %}

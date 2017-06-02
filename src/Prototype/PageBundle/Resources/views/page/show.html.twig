@@ -1,0 +1,56 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+
+{% block body %}
+    <h1>Page</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ page.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ page.title }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ page.slug }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ page.content }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if page.created %}{{ page.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if page.updated %}{{ page.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdby</th>
+                <td>{{ page.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Updatedby</th>
+                <td>{{ page.updatedBy }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('control_page_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('control_page_edit', { 'id': page.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

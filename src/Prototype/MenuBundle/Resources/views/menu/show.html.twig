@@ -1,0 +1,32 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Menu Overview{% endblock %}
+{% block subtext %}View all Menu{% endblock %}
+
+{% block body %}
+
+	<table>
+		<tbody>			<tr>
+				<th>Id</th>
+				<td>{{ menu.id }}</td>
+			</tr>			<tr>
+				<th>Identifier</th>
+				<td>{{ menu.identifier }}</td>
+			</tr>			<tr>
+				<th>Menu_items</th>
+				<td>{% if entity_singularized.menuitems %}{{ entity.menuitems|join(', ') }}{% endif %}</td>
+			</tr>			<tr>
+				<th>Createdat</th>
+				<td>{% if menu.createdAt %}{{ menu.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+			</tr>			<tr>
+				<th>Updatedat</th>
+				<td>{% if menu.updatedAt %}{{ menu.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<div>
+		<a  href="{{ path('control_menu_index') }}" class="btn btn-primary">
+			<span class="glyphicon glyphicon-triangle-left" ></span>Back
+		</a>	</div>
+{% endblock %}

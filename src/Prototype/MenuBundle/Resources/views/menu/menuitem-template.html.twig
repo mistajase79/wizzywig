@@ -1,0 +1,43 @@
+{# menu list item #}
+{% if menuitem is defined %}
+    {% set num = menuitem.menuItemId %}
+    {% set pageId = menuitem.pageId.id %}
+    {% set navTitle = menuitem.pageId.navTitle %}
+    {% set slug = menuitem.pageId.slug %}
+    {% set nameOverride = menuitem.nameOverride %}
+{% else %}
+    {% set num = "__num__" %}
+    {% set pageId = "__pageId__" %}
+    {% set navTitle = "__navtitle__" %}
+    {% set slug = "__slug__" %}
+    {% set nameOverride = "__nameoverride__" %}
+{% endif %}
+
+<li class="mjs-nestedSortable-leaf" id="menuItem_{{num}}"  data-pageId="{{pageId}}"  >
+    <div class="menuDiv">
+        {#
+        <span title="Click to show/hide children" class="disclose">
+            <span class="glyphicon glyphicon-minus"></span>
+        </span>
+        #}
+        <span title="Click to show/hide item editor" data-id="{{num}}" class="expandEditor">
+            <span class="glyphicon glyphicon-triangle-top"></span>
+        </span>
+        <span title="Click to delete item." data-id="{{num}}" class="deleteMenu right">
+            <span class="glyphicon glyphicon-remove"></span>
+        </span>
+        <span>
+            <span data-id="{{num}}" class="itemTitle">{{nameOverride}}</span>
+        </span>
+        <div id="menuEdit{{num}}" class="menuEdit hiddenOnLoad">
+            <label class="control-label">Settings:</label><br/>
+            <div class="form-group">
+                <label class="control-label">URL</label>
+                <input class="form-control form-slug" type="text" value="{{slug}}" readonly="readonly">
+                <br/>
+                <label class="control-label">Override Navigation title</label>
+                <input class="form-control form-navtitle" data-hasoverride="true" type="text" value="{{nameOverride}}" placeholder="Menu Label">
+            </div>
+        </div>
+    </div>
+</li>

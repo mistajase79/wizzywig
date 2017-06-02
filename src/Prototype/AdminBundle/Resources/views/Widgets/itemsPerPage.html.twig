@@ -1,0 +1,6 @@
+<label for="perpage">Items per page:</label>
+<select id="perpage" name="perpage">
+    {% for i in 1..6 %}
+        <option {% if perpage ==(i * 25) %}selected="selected"{% endif %} value="{{ i * 25 }}">{{ i * 25 }}</option>
+    {% endfor %}
+</select>

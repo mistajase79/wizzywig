@@ -1,0 +1,93 @@
+<?php
+
+namespace Prototype\EnquiryBundle\Entity;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Prototype\PageBundle\Custom\Custom;
+
+/**
+ * Enquires
+ *
+ * @ORM\Table(name="enquiry")
+ * @ORM\Entity(repositoryClass="Prototype\EnquiresBundle\Repository\EnquiryRepository")
+ * @Gedmo\Loggable
+ * @Gedmo\TranslationEntity(class="Prototype\EnquiresBundle\Entity\EnquiryTranslations")
+ */
+class Enquiry implements Translatable
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="Your name should not be blank")
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="Your Email should not be blank")
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.", checkMX = true )
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="Subject should not be blank")
+     * @ORM\Column(name="subject", type="string", length=255)
+     */
+    private $subject;
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="Message should not be blank")
+     * @ORM\Column(name="message", type="text")
+     */
+    private $message;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+      * @Gedmo\Timestampable(on="update")
+      * @ORM\Column(type="datetime")
+      */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $unread = true;
+    /**
+      * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $deleted = false;
+
+
+    public function __toString(){
+      return $this->getSubject();
+    }
+
+
+}

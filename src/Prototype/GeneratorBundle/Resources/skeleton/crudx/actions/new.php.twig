@@ -1,0 +1,45 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Creates a new {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/{{ entity|lower }}/new", name="{{ route_name_prefix }}_new")
+     * @Method({"GET", "POST"})
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function newAction(Request $request)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        ${{ entity_singularized }} = new {{ entity_class }}();
+        $form = $this->createForm({{ entity }}Type, ${{ entity_singularized }});
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()){
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                //${{ entity_singularized }}->resizeImage($this->get('image.handling'));
+                $em->persist(${{ entity_singularized }});
+                $em->flush();
+                $this->addFlash('success','Success - {{ entity_singularized }} created');
+                return $this->redirectToRoute('{{ route_name_prefix }}_index');
+                //return $this->redirectToRoute('{{ route_name_prefix }}_show', array('id' => ${{ entity_class|lower }}->getId()));
+            }else{
+                $this->addFlash('error','Error - {{ entity_singularized }} not saved');
+            }
+        }
+
+{% endblock method_body %}
+
+{% block method_return %}
+        return $this->render('{{ bundle }}:{{ entity|lower|replace({'\\': '/'}) }}:new.html.twig', array(
+            '{{ entity_singularized }}' => ${{ entity_singularized }},
+            'form' => $form->createView(),
+        ));
+{% endblock method_return %}
+    }

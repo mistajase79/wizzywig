@@ -1,0 +1,48 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Slider{% endblock %}
+{% block subtext %}Views a single Slider{% endblock %}
+
+
+{% block body %}
+    <h1>Slider</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ slider.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ slider.title }}</td>
+            </tr>
+            <tr>
+                <th>Identifier</th>
+                <td>{{ slider.identifier }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if slider.createdAt %}{{ slider.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if slider.updatedAt %}{{ slider.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

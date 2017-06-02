@@ -1,0 +1,16 @@
+Meet the Team OVERVIEW
+<div class="row">
+{% for teamMember in teamMembers %}
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <img class="img-responsive" src="{{ imageCache('/' ~ teamMember.getFullImagePath, 'cropResize', 250, 300) }}" alt="{{teamMember.name }}"/><br/>
+            <a href="/about-us/meet-the-team/{{teamMember.slug }}" >{{teamMember.name}}</a><br/>
+            <a href="{{generatePath( app.request, 25, {'teammember_slug' : teamMember.slug } ) }}" >{{teamMember.name}}</a>
+            <br/>{{teamMember.position}}
+        </div>
+        {% if loop.index % 2 == 0 %}<div class="hidden-lg hidden-md clearfix"></div>{% endif %}
+        {% if loop.index % 3 == 0 %}<div class="hidden-sm clearfix"></div>{% endif %}
+{% else %}
+	<div>No Team Members Found</div>
+{% endfor %}
+</div>
+{{ knp_pagination_render(teamMembers) }}

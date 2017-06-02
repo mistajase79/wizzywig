@@ -1,0 +1,62 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}New Catalog Category{% endblock %}
+{% block subtext %}Creates a new Catalog Category{% endblock %}
+
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-xs-12" >
+            {{ form_row(form.title) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+        {{ form_row(form.active) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+        {{ form_row(form.description) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" >
+            <div class="box">
+                <div class="box-header with-border">
+                    <label class="control-label">Parent</label>
+                </div>
+                <div class="box-body">
+                    <div id="jstree" class="hidden">
+                        {{ categoryTreeHTML|raw }}
+                    </div>
+                </div>
+                <div class="invisible">{{ form_widget(form.parent) }}</div>
+                <div class="box-body">
+                    <label class="control-label">Selected Parent</label>
+                    <p id="category_text">{% if catalogCategory.parent != null %}{{catalogCategory.parent}}{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Update</button>
+        <a href="{{ path('control_catalog_categories_index') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-triangle-left" ></span>Back
+        </a>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock body %}
+
+{% block javascripts %}
+<script src="{{ asset('/control/js/protocms-catalog.js')}}"></script>
+{% endblock %}

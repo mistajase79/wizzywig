@@ -1,0 +1,9 @@
+BLOG OVERVIEW<br/>
+{% for postcat in postcats %}
+{{ postcat.title }}
+	{% for post in postcat.posts %}
+	<div> - <a href="{{generatePath( app.request, 7, {'blog_category': post.category.slug, 'blog_post_slug': post.slug}  )}}">{{ post.title }}</a></div>
+	{% endfor %}
+{% else %}
+	<div>No Posts Found</div>
+{% endfor %}

@@ -1,0 +1,25 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update TeamMember Translation{% endblock %}
+{% block subtext %}Updates existing TeamMember Translation{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {% if locale is defined  %}
+        {{ showCurrentLocale(locale) }}
+    {% endif %}
+
+    {{ form_widget(form) }}
+
+        <div>
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok" ></span>Save
+            </button>
+            <a  href=" {{ path('control_meettheteam_teammember_index') }} " class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+
+{{ form_end(form) }}
+{% endblock %}

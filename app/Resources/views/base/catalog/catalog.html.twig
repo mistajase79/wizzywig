@@ -1,0 +1,33 @@
+{% extends '@theme/templates/cmspage-store.html.twig' %}
+{% block title %}{% for cat in categoryTree %}{{cat.title}} | {% endfor %}{{ page.metatitle}}{% endblock %}
+{% block metatitle %}{% for cat in categoryTree %}{{cat.title}} | {% endfor %}{{ page.metatitle}}{% endblock %}
+{% block metadescription %}{{category.description}}. {{ page.metadescription}}{% endblock %}
+
+{% block store_content %}
+
+    <h2>Category - {{category.title}}</h2>
+    <p>{{category.description}}</p>
+
+    {% if category.products|length > 0 %}
+        <p>Products
+        {% for product in category.products if (product.active == 1 and product.deleted == 0) %}
+            <br/>{{product.title}} [ <a href="/{{page.slug}}{{product.fullSlugPath}}">/{{page.slug}}{{product.fullSlugPath}}</a> ]
+        {% endfor %}
+        </p>
+    {% endif %}
+
+    {% if subcategoriesArray|length > 0 %}
+        <p>Related Categories
+        {% for subcat in subcategoriesArray %}
+            <br/>{{subcat.title}}
+            {% for product in subcat.products if (product.active == 1 and product.deleted == 0) %}
+                <br/>- {{product.title}} [ <a href="/{{page.slug}}{{product.fullSlugPath}}">/{{page.slug}}{{product.fullSlugPath}}</a> ]
+            {% endfor %}
+        {% endfor %}
+        </p>
+    {% endif %}
+
+{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+{% block javascripts %}{% endblock %}

@@ -1,0 +1,18 @@
+
+    <div>
+        {%- if not hide_submit %}
+        <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok" ></span>{{submit_action}}
+        </button>
+        {%- endif %}
+
+        <a  href="{{ "{{ path('" ~ route_name_prefix ~ "_index') }}" }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-triangle-left" ></span>Back
+        </a>
+
+        {%- if ('delete' in actions) and (not hide_delete) %}
+        <a href="{{ "{{ path('" ~ route_name_prefix ~ "_delete') }}" }}" class="btn btn-danger right">
+            <span class="glyphicon glyphicon-trash" ></span>Delete
+        </a>
+        {%- endif %}
+    </div>

@@ -1,0 +1,33 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update Profile{% endblock %}
+{% block subtext %}Updates your profile{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-sm-12 col-md-3">
+            {% if user.profileimage != "" %}
+            <img src="{{user.profileimage}}" alt="{{user.name}}" />
+            <p>&nbsp;</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-6 form-group">
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Update</button>
+            <a href="{{ path('control_user_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+            <a class="btn btn-primary pull-right" href="{{path('control_user_edit_password', {'id': app.user.id })}}">
+                <span class="glyphicon glyphicon-lock"></span> Change Pass<span class="hidden-xs">word</span>
+            </a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock body %}

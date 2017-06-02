@@ -1,0 +1,60 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Catalogproduct{% endblock %}
+{% block subtext %}Views a single Catalogproduct{% endblock %}
+
+
+{% block body %}
+    <h1>CatalogProducts</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ catalogProduct.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ catalogProduct.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ catalogProduct.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ catalogProduct.price }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ catalogProduct.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ catalogProduct.image }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if catalogProduct.createdAt %}{{ catalogProduct.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if catalogProduct.updatedAt %}{{ catalogProduct.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

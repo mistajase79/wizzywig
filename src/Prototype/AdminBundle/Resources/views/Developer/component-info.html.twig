@@ -1,0 +1,80 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Components Overview{% endblock %}
+{% block subtext %}View all pages with components and whats been assigned{% endblock %}
+{% block body %}
+
+    <h4>Assigned Components</h4>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Page</th>
+                <th>Components</th>
+                <th class="hidden-sm hidden-xs">Component Routes</th>
+                <th>Component Bundle</th>
+                <th>Component Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in pagedata %}
+            <tr>
+                <td>{{ data.page.id }}</td>
+                <td><a href="{{path('control_page_edit', {'id': data.page.id })}}">{{ data.page.title }}</a></td>
+                <td>
+                    {% for com in  data.components %}
+                        {{com.component.name}}<br/>
+                    {% endfor %}
+                </td>
+                <td class="hidden-sm hidden-xs">
+                    {% for com in  data.components %}
+                        {{com.component.route}}<br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for com in  data.components %}
+                        {{com.component.bundle}}<br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for com in  data.components %}
+                        {{com.action}}<br/>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>All Available Components</h4>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Bundle</th>
+                <th>Action</th>
+                <th>In Use?</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for component in cmsComponentArrayExtra %}
+            <tr>
+                <td>{{ component.name }}</td>
+                <td>{{ component.componentType }}</td>
+                <td>{{ component.bundle }}</td>
+                <td>{{ component.action }}</td>
+                <td>
+                    {% if component.inUse %}
+                        <span class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Yes</span>
+                    {% else %}
+                        <span class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> No</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

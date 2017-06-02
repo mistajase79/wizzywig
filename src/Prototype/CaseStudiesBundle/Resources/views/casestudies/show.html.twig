@@ -1,0 +1,64 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Casestudy{% endblock %}
+{% block subtext %}Views a single Casestudy{% endblock %}
+
+
+{% block body %}
+    <h1>CaseStudies</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ caseStudy.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ caseStudy.title }}</td>
+            </tr>
+            <tr>
+                <th>Subtitle</th>
+                <td>{{ caseStudy.subtitle }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ caseStudy.content }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ caseStudy.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ caseStudy.image }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if caseStudy.createdAt %}{{ caseStudy.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if caseStudy.updatedAt %}{{ caseStudy.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fileupload</th>
+                <td>{{ caseStudy.fileUpload }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

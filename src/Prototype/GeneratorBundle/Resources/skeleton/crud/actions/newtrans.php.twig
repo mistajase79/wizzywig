@@ -1,0 +1,49 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Creates a new {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/{{ dashes_entity_singularized }}-translation/{id}/new", name="{{ route_name_prefix }}_new")
+     * @Method({"GET", "POST"})
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function newAction(Request $request, {{ original_entity }} ${{ entity_singularized }})
+{% endblock method_definition %}
+    {
+{% block method_body %}
+
+        $em = $this->getDoctrine()->getManager();
+        $locales = $em->getRepository('PrototypePageBundle:Locales')->findBy(array('active' => 1));
+        $localsAndAttributesArray = $this->container->get('pcgc_translation_services')->fetchAvailableTranslations(${{ entity_singularized }}, $locales);
+
+        $form = $this->createForm({{ ucentity }}Type, ${{ entity_singularized }}, array(
+            'localsAndAttributesArray' =>$localsAndAttributesArray )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()){
+            // find and save translatable setters
+            $formData = $request->get('{{ underscore_entity_pluralized }}_translation');
+            ${{ entity_singularized }} = $this->container->get('pcgc_translation_services')->findAndSetTranslatableEntityData(${{ entity_singularized }}, $formData);
+            ${{ entity_singularized }}->setTranslatableLocale($formData['translatableLocale']); // change locale
+            $em->persist(${{ entity_singularized }});
+            $em->flush();
+            $this->addFlash('success', ucwords($formData['translatableLocale']).' translation Updated');
+            return $this->redirectToRoute('{{ orginal_route_name_prefix }}_index');
+            ///////////////////////////////////////////
+        }
+
+{% endblock method_body %}
+{% block method_return %}
+        return $this->render('{{ bundle }}:{{ original_entity|lower|replace({'\\': '/'}) }}:saveTranslation.html.twig', array(
+            '{{ entity_singularized }}' => ${{ entity_singularized }},
+            'form' => $form->createView(),
+        ));
+{% endblock method_return %}
+    }

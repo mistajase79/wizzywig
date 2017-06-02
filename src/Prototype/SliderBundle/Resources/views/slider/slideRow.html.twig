@@ -1,0 +1,32 @@
+{% for slideimage in sliderImages if slideimage.deleted == 0  %}
+<tr class="sliderimageRow" data-slideId="{{slideimage.id}}">
+    <td><img class="img-responsive slideImage" src="{{ imageCache('/'~ slideimage.getFullImagePath, 'cropResize', 150, 50) }}" /></td>
+    <td>
+        <input type="hidden" class="slideId" value="{{slideimage.id}}" />
+        {% if  slideimage.html !="" %}Yes{% endif %}
+        <div class="hidden htmlcontent">{{slideimage.html}}</div>
+    </td>
+    <td class="position cursor_move">
+        {{ slideimage.position }}
+        <span class="glyphicon glyphicon-resize-vertical zeromargin" ></span>
+        <img class="ajax_loader_position" src="/control/ajax-loader.gif" style="display:none" />
+    </td>
+    <td class="hidden-xs">
+        {{slideimage.link}}
+    </td>
+    {% if multilingual %}
+    <td class="hidden-xs">
+        {{ viewAvailableTranslations( slideimage ) }}
+    </td>
+    {% endif %}
+    <td>
+        <a class="modifySlide btn btn-primary"><span class="glyphicon glyphicon-pencil zeromargin" ></span></a>
+        <a class="removeSlide btn btn-danger"><span class="glyphicon glyphicon-trash zeromargin"></span></a>
+         {% if multilingual %}
+        <a data-toggle="tooltip" title="Add Translation" href="{{ path('control_slider_images_translation_new', {id:slideimage.id}) }}" class="btn btn-primary">
+          <span class="glyphicon glyphicon-globe zeromargin" ></span>
+        </a>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}

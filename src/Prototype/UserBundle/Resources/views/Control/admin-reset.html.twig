@@ -1,0 +1,17 @@
+{% extends 'PrototypeAdminBundle:Control:cms_account_base.html.twig' %}
+{% block pagetitle %}Password Reset{% endblock %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+
+    <div class="login-box-body">
+        <p class="login-box-msg">Reset your Password</p>
+        {% if error %}
+            <div>{{ error.message }}</div>
+        {% endif %}
+        <form action="{{ path('password_cms_reset', {'url_encrypt': url_encrypt }) }}" method="post">
+            {{form_row(form.plainPassword)}}
+            <input type="submit" value="Reset" />
+        {{ form_end(form) }}
+    </div><!-- /.login-box-body -->
+
+  {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}New Team Member{% endblock %}
+{% block subtext %}Creates a new Team Member{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Save</button>
+            <a href="{{ path('control_meettheteam_teammember_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

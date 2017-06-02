@@ -1,0 +1,4 @@
+services:
+#    prototype_news.example:
+#        class: Prototype\NewsBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

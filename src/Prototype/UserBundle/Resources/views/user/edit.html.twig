@@ -1,0 +1,49 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update User{% endblock %}
+{% block subtext %}Updates existing User{% endblock %}
+
+{% block body %}
+
+{{ form_start(edit_form, {'attr': {'id': 'user_admin'}}) }}
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            {{ form_row(edit_form.username) }}
+            {{ form_row(edit_form.email) }}
+            {{ form_row(edit_form.name) }}
+            {{ form_row(edit_form.is_active) }}
+            {{ form_row(edit_form.imageUpload) }}
+        </div>
+
+        {% if user.profileimage != "" %}
+            <div class="col-sm-12 col-md-3">
+            <img src="{{user.profileimage}}" alt="{{user.name}}" />
+            <p>&nbsp;</p>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="row">
+
+        <div class="col-sm-12 form-group">
+
+            {{ form_row(edit_form.roles) }}
+
+            <button class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Update</button>
+            <a href="{{ path('control_user_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+
+        </div>
+    </div>
+
+{{ form_end(edit_form) }}
+
+<div class="col-sm-12 form-group">
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+</div>
+{% endblock body %}

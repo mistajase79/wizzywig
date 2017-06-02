@@ -1,0 +1,6 @@
+services:
+    pcgc_sluggify:
+        class: Prototype\PageBundle\Controller\SlugController
+#    prototype_page.example:
+#        class: Prototype\PageBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

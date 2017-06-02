@@ -1,0 +1,81 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}News Overview{% endblock %}
+{% block subtext %}View all News{% endblock %}
+
+{% block body %}
+
+<a href="{{ path('control_news_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create News
+</a>
+<div class="box-tools pull-right">
+    {% include 'PrototypeAdminBundle:Widgets:searchbox.html.twig' with {'search_string': search } %}
+</div>
+
+	<table class=" table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				{#<th>Slug</th>
+				<th>Subtitle</th>
+				<th>Image</th>
+				<th>Thumbnail</th>
+				<th>Article</th>
+				<th>Exert</th>#}
+				<th>PublishDate</th>
+				{#<th>Createdat</th>
+				<th>Updatedat</th>#}
+				<th>Active</th>
+				{#<th>Deleted</th>#}
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for news in news %}
+		<tr>
+				<td style="width:55px">
+                    <a href="{{ path('control_news_show', { 'id': news.id }) }}">
+                        <img src="{{ imageCache('/userfiles/images/news/' ~ news.image, 'cropResize', 50, 50) }}" />
+                    </a>
+                </td>
+				<td>{{ news.title }}
+					{% if multilingual %}<br/>{{ viewAvailableTranslations(news) }}{% endif %}
+				</td>
+				{#<td>{{ news.slug }}</td>
+				<td>{{ news.subtitle }}</td>
+				<td>{{ news.image }}</td>
+				<td>{{ news.thumbnail }}</td>
+				<td>{{ news.article }}</td>
+				<td>{{ news.exert }}</td>#}
+				<td>{% if news.publishDate %}{{ news.publishDate|date('d-m-Y') }}{% endif %}</td>
+				{#<td>{% if news.createdAt %}{{ news.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+				<td>{% if news.updatedAt %}{{ news.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+				<td>{% if news.active %}Yes{% else %}No{% endif %}</td>
+				{#<td>{% if news.deleted %}Yes{% else %}No{% endif %}</td>#}
+				<td>
+					<a  href="{{ path('control_news_edit', { 'id': news.id }) }}" class="btn btn-primary">
+						<span class="glyphicon glyphicon-pencil zeromargin" ></span>
+					</a>
+					{% if multilingual %}
+					<a data-toggle="tooltip" title="Add Translation" href="{{ path('control_news_translation_new', { 'id': news.id }) }}" class="btn btn-primary">
+					  <span class="glyphicon glyphicon-globe zeromargin" ></span>
+					</a>
+					{% endif %}
+				</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan='6'>No News Found</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+    <div class="box-tools">
+      {{ knp_pagination_render(news) }}
+      <div class="pull-right">
+        Total {{news.getTotalItemCount }} records
+      </div>
+    </div>
+
+{% endblock %}

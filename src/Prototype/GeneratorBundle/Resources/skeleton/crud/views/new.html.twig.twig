@@ -1,0 +1,22 @@
+{% block extends %}
+{{ "{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}" }}
+{% endblock extends %}
+{{ "{% form_theme form 'bootstrap_3_layout.html.twig' %}" }}
+{{ "{% block title %}" }}New {{ entity_singularized|capitalize  }}{{ "{% endblock %}" }}
+{{ "{% block subtext %}" }}Creates a new {{ entity_singularized|capitalize  }}{{ "{% endblock %}" }}
+
+{% block body %}
+{{ "{% block body %}" }}
+
+    {{ '{{ form_start(form) }}' }}
+        {{ '{{ form_widget(form) }}' }}
+        <div>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Save</button>
+            <a href="{{ "{{ path('" ~ route_name_prefix ~ "_index') }}" }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+    {{ '{{ form_end(form) }}' }}
+
+{{ "{% endblock %}" }}
+{% endblock body %}

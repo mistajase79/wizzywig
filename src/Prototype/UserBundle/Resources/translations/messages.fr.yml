@@ -1,0 +1,13 @@
+login:
+    username: 'Username'
+    password: 'Password'
+    start_session: 'Connectez-vous pour démarrer votre session'
+    i_forgot_password: 'j''ai oublié mon mot de passe'
+    sign_in: 'S''identifier'
+    forgot_password?: 'Mot de passe oublié?'
+    email_address: 'Adresse e-mail'
+    email: 'email'
+    send_request: 'Envoyer une demande'
+
+Previous: Précédent
+Next: Prochain

@@ -1,0 +1,68 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Create Menu{% endblock %}
+{% block subtext %}Adds a new Menu{% endblock %}
+
+{% block body %}
+
+<div class="box-body">
+    {{ form_start(form, { 'attr' :{ 'id': 'menuform'}}) }}
+    {{ form_row(form.identifier) }}
+
+    <div class="row">
+        <div class="col-sm-3 col-xs-6" >
+            <div class="box">
+                <div class="box-header with-border">
+                    <label class="control-label">Available Pages</label>
+                </div>
+                <div class="box-body">
+                    <div class="form-group menu-pagelist">
+                        {% for page in pages %}
+                                <button data-pageId="{{page.id}}" data-title="{{page.navtitle}}" data-slug="{{ page.slug }}" class="btn-block text-left">
+                                    <span class="right"><span class="glyphicon glyphicon-triangle-right" ></span></span>
+                                    {{page.navtitle}}<br/>
+                                    <small class="hidden-xs ">/{{ page.slug }}</small>
+                                </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-9 col-xs-6" >
+            <div class="box">
+                <div class="box-header with-border">
+                    <label class="control-label">Menu Structure</label>
+                </div>
+                <div class="box-body">
+                    <div class="form-group menu-activelist">
+                        {{ buildNestedMenu(jsonItems, 0)|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_widget(form.menu_json) }}
+
+    <div class="col-sm-12 col-xs-12" >
+        <button id="parsemenu" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok" ></span>Save
+        </button>
+        <a  href="{{ path('control_menu_index') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-triangle-right" ></span>Back
+        </a>
+    </div>
+
+    {{ form_end(form, {'render_rest': true}) }}
+</div>
+
+<div id="item-template" class="hidden" >
+{% include "PrototypeMenuBundle:menu:menuitem-template.html.twig" %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('/control/js/protocms-menu.js')}}"></script>
+{% endblock %}

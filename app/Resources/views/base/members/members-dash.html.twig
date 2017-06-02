@@ -1,0 +1,9 @@
+{% extends '@theme/base.html.twig' %}
+
+{% block body %}
+  <h2>Member Area</h2>
+  <h3>{% if is_granted('ROLE_USER') %} Welcome Back {{app.user.username}} {% endif %}</h3>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}

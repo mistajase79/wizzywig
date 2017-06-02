@@ -1,0 +1,35 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Menu Overview{% endblock %}
+{% block subtext %}View all Menu{% endblock %}
+
+{% block body %}
+
+<a href="{{ path('control_menu_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create Menu
+</a>
+	<table class="datatable table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Identifier</th>
+				<th>Menu Items</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for menu in menus %}
+		<tr>
+			<td><a href="{{ path('control_menu_show', { 'id': menu.id }) }}">{{ menu.id }}</a></td>
+			<td>{{ menu.identifier }}</td>
+			<td>{{ menu.menuItems|length }}</td>
+			<td>
+				<a  href="{{ path('control_menu_edit', { 'id': menu.id }) }}" class="btn btn-primary">
+					<span class="glyphicon glyphicon-pencil zeromargin" ></span>
+				</a>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

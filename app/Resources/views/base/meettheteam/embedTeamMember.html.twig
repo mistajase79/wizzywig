@@ -1,0 +1,6 @@
+<div class="row">
+    <h1>{{teamMember.name}}</h1>
+    <img src="{{ imageCache('/' ~ teamMember.getFullImagePath, 'cropResize', 500, 600) }}" alt="{{teamMember.name }}"/>
+    <p>{{teamMember.position}}</p>
+    {{teamMember.description|raw}}
+</div>

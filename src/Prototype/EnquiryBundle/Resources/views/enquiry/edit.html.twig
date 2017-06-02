@@ -1,0 +1,24 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update Enquiry{% endblock %}
+{% block subtext %}Updates existing Enquiry{% endblock %}
+
+{% block body %}
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <div>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Update</button>
+            <a href="{{ path('control_enquiry_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+    {{ form_end(edit_form) }}
+    
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+
+{% endblock body %}

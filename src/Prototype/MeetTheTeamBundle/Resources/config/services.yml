@@ -1,0 +1,4 @@
+services:
+#    prototype_meet_the_team.example:
+#        class: Prototype\MeetTheTeamBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

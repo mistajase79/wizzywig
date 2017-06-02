@@ -1,0 +1,118 @@
+<?php
+
+namespace Prototype\MeetTheTeamBundle\Entity;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Prototype\PageBundle\Custom\Custom;
+
+/**
+ * MeetTheTeam
+ *
+ * @ORM\Table(name="meettheteam")
+ * @ORM\Entity(repositoryClass="Prototype\MeetTheTeamBundle\Repository\MeetTheTeamRepository")
+ * @Gedmo\Loggable
+ * @Gedmo\TranslationEntity(class="Prototype\MeetTheTeamBundle\Entity\TeamMemberTranslations")
+ */
+class TeamMember implements Translatable
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="The title should not be blank")
+     * @Gedmo\Translatable
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="The position should not be blank")
+     * @Gedmo\Translatable
+     * @ORM\Column(name="position", type="string", length=255)
+     */
+    private $position;
+
+    /**
+     * @var string
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+    * @Gedmo\Translatable
+    * @Gedmo\Slug(fields={"name"}, separator="-", updatable=true)
+    * @ORM\Column(length=255, unique=true)
+    */
+    private $slug;
+
+    /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+      * @Gedmo\Timestampable(on="update")
+      * @ORM\Column(type="datetime")
+      */
+    private $updatedAt;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $active = true;
+    /**
+      * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $deleted = false;
+
+
+    public function __toString(){
+      return $this->getTitle();
+    }
+
+    // Used by the imagemanager
+    public function getFilePath(){
+        return "userfiles/images/meettheteam";
+    }
+
+    public function getFullImagePath()
+    {
+        return $this->getFilePath().'/'.$this->image;
+    }
+
+    public function setTranslatableLocale($locale){
+       $this->locale = $locale;
+    }
+
+}

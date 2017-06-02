@@ -1,0 +1,46 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Casestudies Overview{% endblock %}
+{% block subtext %}View all Casestudies{% endblock %}
+
+{% block body %}
+<a href="{{ path('control_casestudies_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create Case Study
+</a>
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Subtitle</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for caseStudy in caseStudies %}
+            <tr>
+
+                <td>{{ caseStudy.id }}</td>
+                <td>
+                     {{caseStudy.title }}
+                     {% if multilingual %}<br/>{{ viewAvailableTranslations( caseStudy ) }}{% endif %}
+                </td>
+
+                <td>{{ wordLimit(caseStudy.subtitle, 30) }}</td>
+                <td>{% if caseStudy.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a  href="{{ path('control_casestudies_edit', { 'id': caseStudy.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+                    {% if multilingual %}
+                    <a data-toggle="tooltip" title="Add Translation" href="{{ path('control_casestudies_translation_new', { 'id': caseStudy.id }) }}" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-globe zeromargin" ></span>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

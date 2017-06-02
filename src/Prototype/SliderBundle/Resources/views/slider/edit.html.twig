@@ -1,0 +1,329 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update Slider{% endblock %}
+{% block subtext %}Updates existing Slider{% endblock %}
+
+
+{% block body %}
+
+    {{ form_start(edit_form) }}
+
+        {{ form_row(edit_form.title) }}
+        <div class="form-group">
+            {{ form_label(edit_form.identifier) }}
+            {{ form_widget(edit_form.identifier) }}
+            <span class="help-block">This value can be used to link sliders to pages.</span>
+        </div>
+
+        <div class="box">
+            <div class="box-header with-border">
+                <a class="pull-right btn btn-primary pointer" data-toggle="modal" data-target="#uploadSlideImageModal">
+                    <span class="glyphicon glyphicon-picture"></span>Add New Slide
+                </a>
+                <label class="control-label">Slider Images</label>
+                <span class="help-block">Add or Modify slider images below</span>
+            </div>
+            <div class="box-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Has HTML?</th>
+                            <th>Position</th>
+                            <th class="hidden-xs">Link</th>
+                            {% if multilingual %}<th class="hidden-xs">Translations</th>{% endif %}
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="sortable" class="sliderimagesContainer">
+                        {% for slideimage in slider.images if slideimage.deleted == 0  %}
+                        <tr class="sliderimageRow" data-slideId="{{slideimage.id}}">
+                            <td><img class="img-responsive slideImage" src="{{ imageCache('/'~ slideimage.getFullImagePath, 'cropResize', 150, 50) }}" /></td>
+                            <td>
+                                <input type="hidden" class="slideId" value="{{slideimage.id}}" />
+                                {% if  slideimage.html !="" %}Yes{% endif %}
+                                <div class="hidden htmlcontent">{{slideimage.html}}</div>
+                            </td>
+                            <td class="position cursor_move">
+                                {{ slideimage.position }}
+                                <span class="glyphicon glyphicon-resize-vertical zeromargin" ></span>
+                                <img class="ajax_loader_position" src="/control/ajax-loader.gif" style="display:none" />
+                            </td>
+                            <td class="hidden-xs">
+                               {{slideimage.link}}
+                            </td>
+                            {% if multilingual %}
+                            <td class="hidden-xs">
+                                {{ viewAvailableTranslations( slideimage ) }}
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a class="modifySlide btn btn-primary"><span class="glyphicon glyphicon-pencil zeromargin" ></span></a>
+                                {% if multilingual %}
+                                <a data-toggle="tooltip" title="Add Translation" href="{{ path('control_slider_images_translation_new', {id:slideimage.id}) }}" class="btn btn-primary">
+                                  <span class="glyphicon glyphicon-globe zeromargin" ></span>
+                                </a>
+                                {% endif %}
+                                <a class="removeSlide btn btn-danger"><span class="glyphicon glyphicon-trash zeromargin"></span></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            {{ form_label(edit_form.pages) }}
+            <span class="help-block">Select Pages to show this slider - Remember to add the slider component to the page.</span>
+            {{ form_widget(edit_form.pages) }}
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Save</button>
+            <a href="{{ path('control_slider_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+        {{ form_widget(edit_form._token) }}
+    </form>
+
+
+
+
+<div id="uploadSlideImageModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload New Slide</h4>
+      </div>
+      <div class="modal-body">
+        <p>Add a new slide to the current slider. <img class="ajax_loader" src="/control/ajax-loader.gif" style="display:none" /></p>
+        <form id="slider_image">
+            {{ form_row(slider_image_form.image) }}
+            <input type="hidden" id="slider_image_slider" name="slider_image[slider]" value="{{slider.id}}" />
+            {{ form_row(slider_image_form.link) }}
+            {{ form_row(slider_image_form.html) }}
+            {{ form_row(slider_image_form._token) }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <img class="ajax_loader" src="/control/ajax-loader.gif" style="display:none" /><a id="submitSlide" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add Slide</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modifySlideImageModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update Slide</h4>
+      </div>
+      <div class="modal-body">
+        <p>Update slide on current slider. <img class="ajax_loader" src="/control/ajax-loader.gif" style="display:none" /></p>
+        <form id="update_slide_form">
+        <div id="modifyslide_ajaxcontainer">
+
+        </div>
+        <div class="form-group">
+            <label class="control-label required" for="slider_image_html">Html</label><br/>
+            <textarea id="slider_image_htmlarea" name="slider_image[html]" ></textarea>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <img class="ajax_loader" src="/control/ajax-loader.gif" /><a id="submitUpdatedSlide" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span>Update Slide</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+    $('#slider_image_htmlarea').redactor({
+        plugins: ['table', 'codemirror'],
+        codemirror: {
+            lineNumbers: true,
+            mode: 'xml',
+            indentUnit: 4,
+            theme: 'rubyblue',
+            htmlMode: true,
+
+        }
+    });
+})
+
+
+function cleanInputs(){
+    $('.imagemanager_formwidget img').attr('src', '/images/awaiting-image.png');
+    $('.imagemanager_formwidget span').text('Select file...');
+    $('#slider_image_htmlarea').redactor('code.set', '');
+    $('#slider_image_html').redactor('code.set', '');
+    $('#slider_image_link').val('');
+}
+
+
+$( "#sortable" ).sortable({
+    axis: "y",
+    helper: fixWidthHelper,
+    stop: function (event, ui){
+        changeOrder();
+        $(ui.item).find('.ajax_loader_position').show();
+    }
+}).disableSelection();
+
+
+function fixWidthHelper(e, ui) {
+    ui.children().each(function() {
+        $(this).width($(this).width());
+    });
+    return ui;
+}
+
+
+/*-----------------------------*/
+/* Update Slide Order/Position */
+/*-----------------------------*/
+function changeOrder(){
+
+    var slideOrder = [];
+    $('.sliderimageRow').each(function( index ) {
+        slideOrder.push($(this).attr('data-slideId'));
+    })
+
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        data: { slideorder: slideOrder },
+        url : '{{ path('control_slider_ajax_change_slide_order') }}',
+        success: function(data){
+            $('.ajax_loader').hide();
+            $('.ajax_loader_position').hide();
+            if(data.status =='success'){
+                $('.sliderimagesContainer').html(data.html);
+            }
+        }
+    });
+
+
+}
+
+
+
+/*----------------------------*/
+/* Open and AJAX load Slide   */
+/*----------------------------*/
+$('.sliderimagesContainer').on('click', '.modifySlide', function(){
+
+    var row = $(this).parent().parent();
+    var slideId = row.find('.slideId').val();
+
+    $('#modifySlideImageModal').modal('show');
+
+        $('.ajax_loader').show();
+        $('#modifyslide_ajaxcontainer').html('');
+
+         cleanInputs();
+
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url : '{{ path('control_slider_ajax_update_slide') }}?slideId='+slideId,
+            success: function(data){
+                //alert('data.status = '+data.status);
+                $('.ajax_loader').hide();
+                if(data.status =='success'){
+                    $('#modifyslide_ajaxcontainer').html(data.html);
+                    $('#slider_image_htmlarea').redactor('code.set', data.htmltextarea);
+                }
+            }
+        });
+
+
+})
+
+
+/*-------------------------*/
+/* Add Slide               */
+/*-------------------------*/
+$('#submitSlide').on('click', function(){
+    $('.ajax_loader').show();
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url : '{{ path('control_slider_ajax_add_slide') }}',
+        data: $('#slider_image').serialize(),
+        success: function(data){
+            $('.ajax_loader').hide();
+            if(data.status =='success'){
+                $('.sliderimagesContainer').html(data.html);
+                $('#uploadSlideImageModal').modal('hide');
+                cleanInputs();
+            }
+        }
+    });
+
+})
+
+
+
+/*-------------------------*/
+/* Save Updated Slide      */
+/*-------------------------*/
+$('#submitUpdatedSlide').on('click', function(){
+
+    var update_slideid = $('#update_slideid').val();
+    $('.ajax_loader').show();
+
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url : '{{ path('control_slider_ajax_update_slide') }}?slideId='+update_slideid,
+        data: $('#update_slide_form').serialize(),
+        success: function(data){
+            $('.ajax_loader').hide();
+            if(data.status =='success'){
+                $('#modifySlideImageModal').modal('hide');
+                $('.sliderimagesContainer').html(data.html);
+                cleanInputs();
+            }
+        }
+    });
+
+})
+
+
+
+/*-------------------------*/
+/* Remove Slide            */
+/*-------------------------*/
+$('.sliderimagesContainer').on('click', '.removeSlide', function(){
+
+    var row = $(this).parent().parent();
+    var slideId = row.find('.slideId').val();
+    row.remove();
+
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url : '{{ path('control_slider_ajax_remove_slide') }}?slideId='+slideId,
+            success: function(data){
+                $('.ajax_loader').hide();
+                if(data.status =='success'){
+                    $('.sliderimagesContainer').html(data.html);
+                }
+            }
+        });
+})
+</script>
+{% endblock %}

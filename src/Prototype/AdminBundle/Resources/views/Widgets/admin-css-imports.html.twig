@@ -1,0 +1,15 @@
+{% if is_granted('ROLE_CMS_ACCESS') %}
+    {# ADMIN LTE #}
+    <link rel="stylesheet" href="{{ asset('/control/font-awesome-4.5.0/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/dist/css/skins/skin-blue.min.css')}}">
+
+    {# REDACTOR #}
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/redactor2/redactor.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/redactor2/redactor_custom.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/redactor2/plugins/codemirror-5.25.0/lib/codemirror.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/redactor2/plugins/codemirror-5.25.0/theme/rubyblue.css')}}">
+
+    {# PROTOCMS #}
+    <link rel="stylesheet" href="{{ asset('/control/css/protocms-frontend.css')}}">
+{% endif %}

@@ -1,0 +1,9 @@
+<div class="pcgc-slider-container main-slider slider" data-nexttext="<i class='fa fa-arrow-right'>" data-previoustext="<i class='fa fa-arrow-left'>" data-showmarkers="true" data-type="slide" >
+    <div class="pcgc-slider-wrapper">
+        <ul class="pcgc-slider">
+            {% for slide in slider.images %}
+            <li class="pcgc-slide"><img alt="{{slide.title}}" src="{{ imageCache('/userfiles/images/slider/' ~ slide.image, 'scaleCrop', 1600, 550) }}" ></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

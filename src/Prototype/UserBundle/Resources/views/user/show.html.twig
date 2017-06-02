@@ -1,0 +1,40 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View User{% endblock %}
+{% block subtext %}Views a single User{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-6 col-md-9">
+        <p>
+            <label>Name</label><br/>
+            <span>{{ user.name }}</span>
+        </p>
+        <p>
+            <label>Username</label><br/>
+            <span>{{ user.username }}</span>
+        </p>
+        <p>
+            <label>Email</label><br/>
+            <span>{{ user.email }}</span>
+        </p>
+        <p>
+            <label>Active</label><br/>
+            <span>{% if user.isActive %}Yes{% else %}No{% endif %}</span>
+        </p>
+        <p>
+            <label>Roles</label><br/>
+            <span>{% if user.roles %}{{ user.roles|join('<br/>') }}{% endif %}</span>
+        </p>
+        <p><label>Created</label><br/>
+            <span>{% if user.created %}{{ user.created|date('d M Y') }}{% endif %}</span>
+        </p>
+    </div>
+    {% if user.profileimage != "" %}
+    <div class="col-sm-3 col-md-3 left">
+        <img src="{{user.profileimage}}" alt="{{user.name}}" />
+        <p>&nbsp;</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update CaseStudies Translation{% endblock %}
+{% block subtext %}Updates existing CaseStudies Translation{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {% if locale is defined  %}
+        {{ showCurrentLocale(locale) }}
+    {% endif %}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.subtitle) }}
+    {{ form_row(form.image) }}
+    {{ form_row(form.content) }}
+
+    {{ form_row(form.fileUpload) }}
+    <p><a href="/userfiles/files/casestudies/{{caseStudy.file}}">{{caseStudy.file}}</a></p>
+
+    {{ form_widget(form) }}
+
+        <div>
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok" ></span>Save
+            </button>
+            <a  href=" {{ path('control_casestudies_index') }} " class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+
+{{ form_end(form) }}
+{% endblock %}

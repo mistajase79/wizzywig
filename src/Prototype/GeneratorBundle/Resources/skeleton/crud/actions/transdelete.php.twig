@@ -1,0 +1,53 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Deletes a {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/{{ entity_singularized }}-translation/{id}/delete/{locale}", name="{{ route_name_prefix }}_delete")
+     * @Method("DELETE")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function deleteAction(Request $request, {{ original_entity }} ${{ entity_singularized }}, $locale)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $form = $this->createDeleteForm(${{ entity_singularized }}, $locale);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            ${{ entity_singularized }}->setTranslatableLocale($locale);
+    		$em->refresh(${{ entity_singularized }});
+            ${{ entity_singularized }}->setDeleted(true);
+            $em->persist(${{ entity_singularized }});
+            $em->flush();
+        }
+{% endblock method_body %}
+
+{% block method_return %}
+        return $this->redirectToRoute('control_{{original_entity|lower}}_index');
+{% endblock method_return %}
+    }
+
+{% block form %}
+    /**
+     * Creates a form to delete a {{ entity }} entity.
+     *
+     * @param {{ entity_class }} ${{ entity_singularized }} The {{ entity }} entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm({{ entity_class }} ${{ entity_singularized }}, $locale)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('{{ route_name_prefix }}_delete', array('id' => ${{ entity_singularized }}->getId(), 'locale' => $locale)))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
+{% endblock form %}

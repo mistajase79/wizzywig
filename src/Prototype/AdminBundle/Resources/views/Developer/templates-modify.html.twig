@@ -1,0 +1,39 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Add/Modify Template{% endblock %}
+{% block subtext %}Create or modify a page template{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.templatefile) }}
+    {{ form_row(form.active) }}
+
+    <div class="form-group">
+        {{ form_label(form.inherited_bundle_name) }}
+        <span class="help-block">
+            This is an advanced template feature - its only to be used if your creating pages/actions outside the CMS (i.e. not using components).
+            <br/>The CMS can fetch the current bundle from the request and if it matches the selected bundle below then the current action will <strong>inherit</strong> page entity data.
+            <br/>Usage cases can include:
+            <ul>
+                <li>Members area - where cms routing isnt needed</li>
+                <li>Store/Catalogue bundle where its own routing and actions are used without the need for dozens of pages and/or components</li>
+            </ul>
+            <strong>If your not sure then leave blank!</strong>
+        </span>
+        {{ form_widget(form.inherited_bundle_name) }}
+    </div>
+
+
+    {{ form_widget(form) }}
+
+    <div>
+        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Save</button>
+        <a  href="{{ path('control_developer_templates_index') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-triangle-left" ></span>Back
+        </a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

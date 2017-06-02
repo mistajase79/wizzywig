@@ -1,0 +1,30 @@
+    /**
+{% block phpdoc_method_header %}
+    * Lists all {{ entity }} entities.
+{% endblock phpdoc_method_header %}
+    *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+    * @Route("/", name="{{ route_name_prefix }}_index")
+    * @Method("GET")
+    * @ProtoCmsAdminDash("{{ entity }} Overview", active=true, routeName="{{ route_name_prefix }}_index", icon="glyphicon glyphicon-list", menuPosition=9999)
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+    */
+{% block method_definition %}
+    public function indexAction()
+{% endblock method_definition %}
+    {
+{% block method_body %}
+
+        $em = $this->getDoctrine()->getManager();
+        ${{ entity_pluralized }} = $em->getRepository('{{ bundle }}:{{ ucentity }}')->findBy(array('deleted'=>false));
+
+{% endblock method_body %}
+
+{% block method_return %}
+        return $this->render('{{ bundle }}:{{ entity|lower|replace({'\\': '/'}) }}:index.html.twig', array(
+            '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+        ));
+{% endblock method_return %}
+    }

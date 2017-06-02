@@ -1,0 +1,8 @@
+<input type="hidden" id="update_slideid" name="update_slideid" value="{{sliderImage.id}}" />
+<form id="update_slide_form">
+    {{ form_row(ajax_slide_form.image) }}
+    {{ form_row(ajax_slide_form.position) }}
+    <input type="hidden" id="slider_image_slider" name="slider_image[slider]" value="{{sliderImage.slider.id}}" />
+    {{ form_row(ajax_slide_form.link) }}
+    {{ form_row(ajax_slide_form._token) }}
+</form>

@@ -1,0 +1,30 @@
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% for availableComponentSpace in availableComponentSpaces %}
+	{% set spaceIndex = loop.index0 %}
+	<div class="form-group">
+		<label class="control-label">{{ availableComponentSpace }}</label>
+		{% for com in edit_form.components if com.position.vars.value == availableComponentSpace %}
+			{{ form_widget(com.route, { 'name': 'name="page[components]['~ spaceIndex ~'][route]' }) }}
+			{{ form_errors(com.route) }}
+			{{ form_widget(com.position, { 'name': 'name="page[components]['~ spaceIndex ~'][position]', 'value':availableComponentSpace }) }}
+			{{ form_errors(com.position) }}
+		{% else %}
+			<select class="form-control" id="form_components_name_{{spaceIndex}}" name="page[components][{{spaceIndex}}][route]">
+				<option value>None</option>
+				<optgroup label="General">
+					{% for cmsComponent in componentselect.general %}
+					<option data-slug="{{cmsComponent.slug}}" data-urlbased="{% if cmsComponent.slug !="" %}1{% else %}0{% endif %}" value="{{cmsComponent.route}}" >{{cmsComponent.name}}</option>
+					{% endfor %}
+				</optgroup>
+				<optgroup label="URL Based">
+					{% for cmsComponent in componentselect.urlbased %}
+					<option data-slug="{{cmsComponent.slug}}" data-urlbased="{% if cmsComponent.slug !="" %}1{% else %}0{% endif %}" value="{{cmsComponent.route}}" >{{cmsComponent.name}}</option>
+					{% endfor %}
+				</optgroup>
+			</select>
+			<input name="page[components][{{spaceIndex}}][position]" type="hidden" value="{{ availableComponentSpace }}"/>
+		{% endfor %}
+	</div>
+{% else %}
+	<div class="form-group"><p>No Components available on this template</p></div>
+{% endfor %}

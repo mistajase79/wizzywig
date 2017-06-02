@@ -1,0 +1,13 @@
+{# longURL is generated for CMS pages #}
+{% if longUrl is defined  %}
+    <a title="English" onclick="gotoLink('/{{longUrl}}&amp;_locale=en')">EN</a>&nbsp;
+    {% for locale in fetchLocales() %}
+        <a title="{{locale.language}}" onclick="gotoLink('/{{longUrl}}&amp;_locale={{locale.locale}}')">{{locale.locale|upper}}</a>&nbsp;
+    {% endfor %}
+{% else %}
+{# For pages outside the CMS - i.e. not a page entity, like static login page or members area #}
+    <a title="English" onclick="gotoLink('?_locale=en')">EN</a>&nbsp;
+    {% for locale in fetchLocales() %}
+    <a title="{{locale.language}}" onclick="gotoLink('?_locale={{locale.locale}}')">{{locale.locale|upper}}</a>&nbsp;
+    {% endfor %}
+{% endif %}

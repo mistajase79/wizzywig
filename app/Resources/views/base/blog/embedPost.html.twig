@@ -1,0 +1,8 @@
+BLOG TEMPLATE<br/>
+<strong>{{ post.title }} - {{ post.category }}</strong>
+<br/>
+<p><img src="{{ imageCache('/userfiles/images/blog/' ~ post.image, 'zoomResize', 100, 350) }}" /></p>
+
+
+{{ post.post|raw }}
+end

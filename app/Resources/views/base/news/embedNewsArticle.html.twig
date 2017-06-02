@@ -1,0 +1,14 @@
+NEWS TEMPLATE<br/>
+<div class="row">
+    <div class="col-sm-6 col-xs-12" >
+        <h2>{{ allowInlineEditor(news, 'title')|raw }}</h2><br/>
+        <p>
+            {{ allowInlineEditor(news, 'subtitle')|raw }}<br/>
+            {{ allowInlineEditor(news, 'article')|raw }}
+        </p>
+
+    </div>
+    <div class="col-sm-6 col-xs-12" >
+        <img class="img-responsive" src="{{ imageCache('/userfiles/images/news/' ~ news.image, 'resizeCrop', 350, 350) }}" />
+    </div>
+</div>

@@ -1,0 +1,52 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Catalogcategory{% endblock %}
+{% block subtext %}Views a single Catalogcategory{% endblock %}
+
+
+{% block body %}
+    <h1>CatalogCategories</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ catalogCategory.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ catalogCategory.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ catalogCategory.description }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ catalogCategory.slug }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if catalogCategory.createdAt %}{{ catalogCategory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if catalogCategory.updatedAt %}{{ catalogCategory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

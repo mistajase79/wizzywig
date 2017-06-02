@@ -1,0 +1,40 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Htmlblock{% endblock %}
+{% block subtext %}Views a single Htmlblock{% endblock %}
+
+
+{% block body %}
+    <h1>HtmlBlocks</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ htmlBlock.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ htmlBlock.title }}</td>
+            </tr>
+            <tr>
+                <th>Html</th>
+                <td>{{ htmlBlock.html }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

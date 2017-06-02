@@ -1,0 +1,111 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        Prototype\UserBundle\Entity\User:
+          algorithm: bcrypt
+          cost: 12
+        Prototype\UserBundle\Entity\SpecialUser:
+          algorithm: bcrypt
+          cost: 12
+
+    role_hierarchy:
+        #ROLE_SPECIAL:    #ROLE_SPECIAL under a seperate firewall - dont inherit roles
+        ROLE_ADMIN:       ['ROLE_CMS_ACCESS', 'ROLE_PAGE_EDITOR', 'ROLE_MENU_EDITOR', 'ROLE_BLOG_EDITOR', 'ROLE_NEWS_EDITOR','ROLE_CASESTUDIES_EDITOR', ROLE_ENQUIRIES_ACCESS, 'ROLE_SLIDER_EDITOR', 'ROLE_CATALOG_EDITOR']
+        ROLE_SUPER_ADMIN: ['ROLE_CMS_ACCESS', 'ROLE_ADMIN']
+        ROLE_DEVELOPER:   ['ROLE_CMS_ACCESS', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']
+
+    providers:
+        admin_db_provider:
+            entity:
+                class: PrototypeUserBundle:User
+                property: username
+        special_db_provider:
+            entity:
+                class: PrototypeUserBundle:SpecialUser
+                property: username
+        member_db_provider:
+            entity:
+                class: PrototypeUserBundle:User
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        special:
+            pattern: ^/special-user
+            anonymous: ~
+            provider: special_db_provider
+            context: my_context
+            switch_user:
+                { parameter: _impersonate }
+            form_login:
+                login_path:  special_login # the route name for your login route
+                check_path:  special_login_check # the rout name for your login check route
+                default_target_path: special_user_dash
+            logout:
+                path: /logout
+                target: /
+            #anonymous: true # only paths that require a non anonymous role will be password protected
+        control:
+            pattern: ^/control
+            anonymous: ~
+            provider: admin_db_provider
+            context: my_context
+            switch_user:
+                { parameter: _impersonate }
+            form_login:
+                login_path:  control_login # the route name for your login route
+                check_path:  control_check # the route name for your login check route
+                default_target_path: control_dash
+            logout:
+                path: /logout
+                target: /
+            #anonymous: true # only paths that require a non anonymous role will be password protected
+        main:
+            pattern: ^/ # everything will go through this firewall
+            anonymous: ~
+            provider: member_db_provider
+            context: my_context
+            switch_user:
+                { parameter: _impersonate }
+            form_login:
+                login_path:  member_login # the route name for your login route
+                check_path:  member_check # the route name for your login check route
+                default_target_path: member_dash
+            logout:
+                path: /logout
+                target: /
+            #anonymous: true # only paths that require a non anonymous role will be password protected
+
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/members/, role: ROLE_USER }
+        - { path: ^/special-user/, role: ROLE_SPECIAL }
+        - { path: ^/control/dash, role: ROLE_CMS_ACCESS }
+        - { path: ^/control/user/profile, role: ROLE_CMS_ACCESS }
+        - { path: ^/control/developer, role: ROLE_DEVELOPER }
+
+        - { path: ^/control/page, role: ROLE_PAGE_EDITOR }
+        - { path: ^/control/htmlblocks, role: ROLE_PAGE_EDITOR }
+        - { path: ^/control/news, role: ROLE_NEWS_EDITOR }
+        - { path: ^/control/blog, role: ROLE_BLOG_EDITOR }
+        - { path: ^/control/menu, role: ROLE_MENU_EDITOR }
+        - { path: ^/control/slider, role: ROLE_SLIDER_EDITOR }
+        - { path: ^/control/catalog, role: ROLE_CATALOG_EDITOR }
+        - { path: ^/control/case-studies, role: ROLE_CASESTUDIES_EDITOR }
+        - { path: ^/control/enquiries, role: ROLE_ENQUIRIES_ACCESS }
+
+        # Please ensure this stays at the bottom to catch anythings thats missed
+        - { path: ^/control/[A-Za-z0-9 _], role: ROLE_ADMIN }
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html

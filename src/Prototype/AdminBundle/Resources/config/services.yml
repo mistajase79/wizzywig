@@ -1,0 +1,4 @@
+services:
+#    prototype_admin.example:
+#        class: Prototype\AdminBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

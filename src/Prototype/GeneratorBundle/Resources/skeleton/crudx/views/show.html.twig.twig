@@ -1,0 +1,52 @@
+{% block extends %}
+{{ "{% extends 'admin.html.twig' %}" }}
+{{ "{% block title %}" ~ entity ~ " Overview{% endblock %}" }}
+{{ "{% block subtext %}View all " ~ entity ~ "{% endblock %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block body %}" }}
+
+    <table>
+        <tbody>
+        {%- for field, metadata in fields %}
+            <tr>
+                <th>{{ field|capitalize }}</th>
+
+            {%- if metadata.type in ['datetime'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['date'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['time'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['array'] %}
+
+                <td>{{ '{% if entity_singularized.' ~ field|replace({'_': ''}) ~ ' %}{{ entity.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['boolean'] %}
+
+                <td>{{ '{% if entity_singularized.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+
+            {%- else %}
+
+                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+            {%- endif %}
+
+            </tr>
+
+        {%- endfor %}
+
+        </tbody>
+    </table>
+
+{% set hide_edit, hide_delete, hide_submit, submit_action = true, true, true, 'Save' %}
+{{ include('crud/views/others/record_actions.html.twig.twig') -}}
+{{ "{% endblock %}" }}
+{% endblock body %}

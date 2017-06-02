@@ -1,0 +1,16 @@
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% if error %}
+<p class="error">Please check the form for errors</p>
+{% endif %}
+
+{% if success %}
+<p class="success">Thank you for your enquiry.</p>
+{% else %}
+    <form method="post" >
+        {{ form_widget(form) }}
+        <div>
+            <button type="submit" class="btn btn-success">Send</button>
+        </div>
+    {{ form_end(form) }}
+{% endif %}

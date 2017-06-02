@@ -1,0 +1,51 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Page Overview{% endblock %}
+{% block subtext %}View all pages{% endblock %}
+{% block body %}
+
+	<a href="{{ path('control_page_new') }}" class="btn btn-primary">
+	  <span class="glyphicon glyphicon-plus" ></span>Create Page
+	</a>
+
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+				<th class="hidden-xs">Template</th>
+				<th class="hidden-sm hidden-xs">Components</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for page in pages %}
+            <tr>
+                <td>{{ page.id }}</td>
+                <td>{{ page.title }}<br/>
+					<small>/{{ page.slug }}</small>
+					{% if multilingual %}<br/>{{ viewAvailableTranslations(page) }}{% endif %}
+				</td>
+				<td  class="hidden-xs">{{ page.template.title }}</td>
+				<td class="hidden-sm  hidden-xs">
+					<ul>
+						{% for component in page.components %}
+							{% if component.route !="" %}<li>{{component.route}}{% endif %}</li>
+						{% endfor %}
+					</ul>
+				</td>
+                <td>
+					<a title="Edit Page" href="{{ path('control_page_edit', { 'id': page.id }) }}" class="btn btn-primary">
+					  <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+					</a>
+					{% if multilingual %}
+					<a data-toggle="tooltip" title="Add Translation" href="{{ path('control_page_translation_new', { 'id': page.id }) }}" class="btn btn-primary">
+					  <span class="glyphicon glyphicon-globe zeromargin" ></span>
+					</a>
+					{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

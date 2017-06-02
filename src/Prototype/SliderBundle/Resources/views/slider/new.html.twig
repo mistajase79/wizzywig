@@ -1,0 +1,25 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}New Slider{% endblock %}
+{% block subtext %}Creates a new Slider{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.title) }}
+        <div class="form-group">
+            {{ form_label(form.identifier) }}
+            {{ form_widget(form.identifier) }}
+            <span class="help-block">This value can be used to link sliders to pages.</span>
+        </div>
+        
+        <div>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Save &amp; Add Slides</button>
+            <a href="{{ path('control_slider_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

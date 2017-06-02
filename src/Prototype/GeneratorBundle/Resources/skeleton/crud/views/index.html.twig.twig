@@ -1,0 +1,91 @@
+{% block extends %}
+{{ "{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}" }}
+{% endblock extends %}
+{{ "{% block title %}"}}{{ entity_pluralized|capitalize  }} Overview{{ "{% endblock %}" }}
+{{ "{% block subtext %}"}}View all {{ entity_pluralized|capitalize  }}{{ "{% endblock %}" }}
+
+{% block body %}
+{{ "{% block body %}" }}
+<a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create {{ entity_singularized }}
+</a>
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+{% for field, metadata in fields %}
+{% if (field|capitalize  != 'Deleted') and (field|capitalize  != 'Slug') and (field|capitalize  != 'Updatedat') %}
+                <th>{{ field|capitalize }}</th>
+{% endif %}
+{%- endfor %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+            <tr>
+{% set count = 0 %}
+{% for field, metadata in fields %}
+{% if (field|replace({'_': ''}) != 'deleted') and (field|replace({'_': ''}) != 'slug') and (field|replace({'_': ''}) != 'updatedAt') %}
+{%- if loop.first and ('show' in actions) %}
+
+                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+{%- elseif metadata.type in ['datetime'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d-m-Y H:i:s\') }}{% endif %}' }}</td>
+
+{%- elseif metadata.type in ['date'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'d-m-Y\') }}{% endif %}' }}</td>
+
+{%- elseif metadata.type in ['time'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+{%- elseif metadata.type in ['array'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+{%- elseif metadata.type in ['boolean'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+
+{%- else %}
+{%- if count == 0 %}
+
+                <td>
+                    {{' {{' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}
+                    {{' {% if multilingual %}<br/>{{ viewAvailableTranslations( ' ~ entity_singularized ~ ' ) }}{% endif %} '}}
+                </td>
+{% set count = count + 1 %}
+{%- else %}
+
+                <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+{%- endif %}
+{%- endif %}
+{%- if loop.last %}
+
+{%- endif %}
+{%- endif %}
+{% endfor %}
+
+                <td>
+{%- for action in record_actions if action != 'show' %}
+
+                    <a  href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+{% endfor %}
+                    {{ "{% if multilingual %}" }}
+                    <a data-toggle="tooltip" title="Add Translation" href="{{ "{{ path('" ~ route_name_prefix ~ "_translation_new', { 'id': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-globe zeromargin" ></span>
+                    </a>
+                    {{ "{% endif %}" }}
+                </td>
+            </tr>
+            {{ '{% endfor %}' }}
+        </tbody>
+    </table>
+
+{{ "{% endblock %}" }}
+{% endblock body %}

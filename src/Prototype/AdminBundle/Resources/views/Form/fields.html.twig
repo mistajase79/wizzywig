@@ -1,0 +1,46 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block imagemanager_widget %}
+<div class="imagemanager_formwidget" data-widget{{ block('widget_attributes') }}  >
+{#
+{% if value is not empty %}{% set image = image_url ~ '/tn_'~ value %}{% else %}{% set image = '/images/awaiting-image.png' %}{% endif %}
+<img data-imagepath="{{ asset(image_url) }}" src="{{ web_image(image).cropResize(105,105).fixOrientation().fillBackground('transparent') }}"  />
+#}
+<img class="img_imagefield" width="105px" data-imagepath="{{ asset(image_url) }}" src="{% if value is not empty %}/{{ image_url }}/tn_{{ value }}{% else %}/images/awaiting-image.png{% endif %}"  />
+<a class="btn btn-primary imagemanager_modal_open" data-{{ block('widget_attributes') }}  data-toggle="modal" data-imagepath="{{ asset(image_url) }}" ><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>&nbsp;<br/><span>{% if value is not empty %}{{ value }}{% else %}Select file...{% endif %}</span>
+<input class="hidden_imagefield" type="hidden" data-imagemanager="true" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+</div>
+{% endblock %}
+
+
+{% block summernote_widget %}
+<br/><textarea {{ block('widget_attributes') }} data-fieldtype="summernote" >{{ value }}</textarea>
+{% endblock %}
+
+{% block redactor_widget %}
+<br/><textarea {{ block('widget_attributes') }} data-fieldtype="redactor" >{{ value }}</textarea>
+{% endblock %}
+
+{% block datepicker_widget %}
+<div class="input-group date">
+  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+  <input  {{ block('widget_attributes') }} class="datepicker form-control pull-right"  value="{{ value|date('d-m-Y') }}">
+</div>
+{% endblock %}
+
+{% block captcha_widget %}
+{% spaceless %}
+<div class="captcha_formwidget" >
+    {# <img src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}" /> #}
+    <span>{{ app.session.get('gcb_captcha').phrase }}</span>
+    {{ form_widget(form) }}
+</div>
+{% endspaceless %}
+{% endblock %}
+
+{% block datetimepicker_widget %}
+<div class="input-group date">
+  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+  <input  {{ block('widget_attributes') }} class="datetimepicker form-control pull-right"  value="{{ value|date('d-m-Y H:i') }}">
+</div>
+{% endblock %}

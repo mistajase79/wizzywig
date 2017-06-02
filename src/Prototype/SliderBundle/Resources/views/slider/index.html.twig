@@ -1,0 +1,41 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Sliders Overview{% endblock %}
+{% block subtext %}View all Sliders{% endblock %}
+
+{% block body %}
+<a href="{{ path('control_slider_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create Slider
+</a>
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Identifier</th>
+                <th>No. Slides</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for slider in sliders %}
+            <tr>
+
+                <td>{{ slider.id }}</td>
+                <td>
+                     {{slider.title }}
+                </td>
+                <td>{{ slider.identifier }}</td>
+                <td>{{ slider.images|length }}</td>
+                <td>{% if slider.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a  href="{{ path('control_slider_edit', { 'id': slider.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

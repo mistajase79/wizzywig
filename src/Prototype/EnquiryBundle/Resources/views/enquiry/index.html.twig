@@ -1,0 +1,67 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Enquiries Overview{% endblock %}
+{% block subtext %}View all Enquiries{% endblock %}
+
+{% block body %}
+<!-- Main content -->
+   <section class="content">
+     <div class="row">
+         <div class="box box-primary">
+           <div class="box-header with-border">
+             <h3 class="box-title">Inbox</h3>
+             <div class="box-tools pull-right">
+                 {% include 'PrototypeAdminBundle:Widgets:searchbox.html.twig' with {'search_string': search } %}
+             </div>
+             <!-- /.box-tools -->
+           </div>
+           <!-- /.box-header -->
+           <div class="box-body no-padding">
+             <div class="mailbox-controls">
+              <button type="button" data-toggle="tooltip" title="Select All" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+              <button type="button" onclick="postForm('#multidelete')" data-toggle="tooltip" title="Delete Selected" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+              <button type="button" onclick="location.reload();" data-toggle="tooltip" title="Refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+              <a href="{{path('control_enquiry_mark_all_as_read')}}" data-toggle="tooltip" title="Mark all as Read" class="btn btn-default btn-sm"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>
+              <div class="pull-right">
+                {% include 'PrototypeAdminBundle:Widgets:itemsPerPage.html.twig' %}
+              </div>
+
+             </div>
+                <div class="table-responsive mailbox-messages">
+                    <form method="post" id="multidelete" action="{{path('control_enquiry_multidelete')}}">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                            {% for enquiry in pagination %}
+                                <tr>
+                                    <td><input type="checkbox" name="selected[{{ enquiry.id }}]" value="1" /></td>
+                                    <td class="mailbox-name{% if enquiry.viewed %} viewed{% endif %}"><a href="{{path('control_enquiry_show', {'id':enquiry.id})}}">{{enquiry.name }}</a></td>
+                                    <td class="mailbox-subject{% if enquiry.viewed %} viewed{% endif %}"><a href="{{path('control_enquiry_show', {'id':enquiry.id})}}">{{wordLimit( '<strong>' ~ enquiry.subject ~ '</strong> - ' ~ wordLimit( enquiry.message,10), 15)|raw }}</a></td>
+                                    <td class="{% if enquiry.viewed %}viewed{% endif %}">{% if enquiry.createdAt %}{{ humanTiming(enquiry.createdAt) }} ago{% endif %}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4">No Messages</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <!-- /.mail-box-messages -->
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer no-padding">
+                <div class="mailbox-controls">
+                  {{ knp_pagination_render(pagination) }}
+                  <div class="pull-right">
+                    Total {{pagination.getTotalItemCount }} records
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% block extends %}
+{{ "{% extends 'admin.html.twig' %}" }}
+{{ "{% form_theme form 'bootstrap_3_layout.html.twig' %}" }}
+{{ "{% block title %}Create " ~ entity ~ "{% endblock %}" }}
+{{ "{% block subtext %}Adds a new " ~ entity ~ "{% endblock %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block body %}" }}
+        {{ '{{ form_start(form) }}' }}
+        {{ '{{ form_widget(form) }}' }}
+        {% set hide_edit, hide_delete, hide_submit, submit_action = true, true, false, 'Save' %}
+        {{ include('crud/views/others/record_actions.html.twig.twig') -}}
+        {{ '{{ form_end(form) }}' }}
+    {{ "{% endblock %}" }}
+{% endblock body %}

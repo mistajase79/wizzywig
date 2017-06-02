@@ -1,0 +1,51 @@
+<?php
+
+namespace {{ namespace }}\Controller{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+{% block use_statements %}
+{% if 'new' in actions or 'edit' in actions or 'delete' in actions %}
+use Symfony\Component\HttpFoundation\Request;
+{%- endif %}
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+{% if 'annotation' == format -%}
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+{%- endif %}
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormError;
+
+use {{ namespace }}\Entity\{{ entity }}Translation;
+{% if 'new' in actions or 'edit' in actions %}
+//use {{ namespace }}\Form\{{ entity }}TranslationType;
+const {{ entity }}TranslationType = '{{ namespace }}\Form\{{ entity }}TranslationType';
+{% endif %}
+{% endblock use_statements %}
+
+/**
+{% block phpdoc_class_header %}
+ * {{ entity }}Translation controller.
+{% endblock phpdoc_class_header %}
+ *
+{% block phpdoc_class_annotations %}
+{% if 'annotation' == format %}
+ * @Route("/{{ route_prefix }}")
+{% endif %}
+{% endblock phpdoc_class_annotations %}
+ */
+{% block class_definition %}
+class {{ entity_class }}TranslationController extends Controller
+{% endblock class_definition %}
+{
+{% block class_body %}
+    {%- if 'new' in actions %}
+        {%- include 'crud/actions/newtrans.php.twig' %}
+    {%- endif %}
+
+    {%- if 'edit' in actions %}
+        {%- include 'crud/actions/edittrans.php.twig' %}
+    {%- endif %}
+
+{% endblock class_body %}
+}

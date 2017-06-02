@@ -1,0 +1,4 @@
+services:
+#    prototype_slider.example:
+#        class: Prototype\SliderBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

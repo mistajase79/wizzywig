@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block metatitle %}Welcome!{% endblock %}</title>
+        <meta name="description" content="{% block metadescription %}Welcome!{% endblock %}">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('/control/adminlte/bootstrap/css/bootstrap.min.css') }}">
+        {# ADMIN ONLY CSS FILES MERGED INTO SINGLE INCLUDE FILE #}
+        {% include 'PrototypeAdminBundle:Widgets:admin-css-imports.html.twig' %}
+
+        <link rel="stylesheet" href="{{ asset('/css/proto.css')}}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="skin-blue sidebar-collapse sidebar-mini">
+         {{ render(controller('PrototypeAdminBundle:Default:showAdminHeader')) }}
+
+        <div class="container">
+
+            <div style="float:right">
+                {% include '@theme/common/language-select.html.twig' %}
+            </div>
+
+            <h1>ProtoCMS v2 - BASE</h1>
+
+            <nav class="navbar navbar-default">
+                {% include '@theme/common/main-navigation.html.twig' %}
+            </nav>
+
+            {% include '@theme/common/alert-notifications.html.twig' %}
+
+            <section class="main">
+                {% block breadcrumbs %}{% endblock %}
+                {% block body %}{% endblock %}
+            </section>
+        </div>
+
+        <script src="{{ asset('/control/adminlte/plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
+        <script src="{{ asset('/control/adminlte/bootstrap/js/bootstrap.min.js')}}"></script>
+
+        {# ADMIN ONLY JAVASCRIPT FILES MERGED INTO SINGLE INCLUDE FILE #}
+        {% include 'PrototypeAdminBundle:Widgets:admin-js-imports.html.twig' %}
+
+        <script src="{{ asset('/js/pcgc-slider.js')}}"></script>
+        <script src="{{ asset('/js/pcgc.js')}}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

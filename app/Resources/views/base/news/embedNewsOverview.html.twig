@@ -1,0 +1,12 @@
+NEWS OVERVIEW
+{% for article in articles %}
+<div>
+	<p>
+        <a href="{{generatePath( app.request, 3, {'news_slug' : article.slug } ) }}" >{{article.title}}</a> - {{article.exert|striptags}}<br/>
+        {% if article.publishDate %}{{ article.publishDate|date('d-m-Y') }}{% endif %}
+    </p>
+</div>
+{% else %}
+	<div>No News Found</div>
+{% endfor %}
+{{ knp_pagination_render(articles) }}

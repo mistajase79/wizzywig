@@ -1,0 +1,195 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update Page{% endblock %}
+{% block subtext %}Updates an existing page{% endblock %}
+
+{% block body %}
+
+<div class="box-body">
+
+    <input type="hidden" id="pageID" value="{{page.id}}"/>
+
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div class="col-sm-6 col-xs-12" >
+        {{ form_row(form.title) }}
+
+        <div class="form-group">
+            {{ form_label(form.navtitle) }}
+            {{ form_widget(form.navtitle) }}
+            <span class="help-block">This value will be overridden in the menu editor</span>
+        </div>
+
+        {{ form_row(form.viewable_from) }}
+
+        {{ form_row(form.active) }}
+
+        {{ form_row(form.template) }}
+
+        <div class="box">
+            <div class="box-header with-border">
+                <label class="control-label">Components <img id="template_components_loader" src="/control/ajax-loader.gif" /></label>
+                <span class="help-block">Components are dynamic functions used on areas of the page</span>
+            </div>
+            <div class="box-body components-area">
+
+            {% for availableComponentSpace in availableComponentSpaces %}
+                {% set spaceIndex = loop.index0 %}
+                <div class="form-group">
+                    <label class="control-label">{{ availableComponentSpace }}</label>
+                    {% for com in form.components if com.position.vars.value == availableComponentSpace %}
+                        {{ form_widget(com.route, { 'name': 'name="page[components]['~ spaceIndex ~'][route]' }) }}
+                        {{ form_errors(com.route) }}
+                        {{ form_widget(com.position, { 'name': 'name="page[components]['~ spaceIndex ~'][position]', 'value':availableComponentSpace }) }}
+                        {{ form_errors(com.position) }}
+                    {% else %}
+                        <select class="form-control" id="form_components_name_{{spaceIndex}}" name="page[components][{{spaceIndex}}][route]">
+                            <option value>None</option>
+                            {% for cmsComponent in cmsComponentArray %}
+                            <option data-slug="{{cmsComponent.slug}}" data-urlbased="{% if cmsComponent.slug !="" %}1{% else %}0{% endif %}" value="{{cmsComponent.route}}" >{{cmsComponent.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <input name="page[components][{{spaceIndex}}][position]" type="hidden" value="{{ availableComponentSpace }}"/>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-group"><p>No Components available on this template</p></div>
+            {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-6 col-xs-12" >
+
+        <div class="box">
+            <div class="box-header with-border">
+                <label class="control-label">Parent Page</label>
+                <span class="help-block">The parent page affects the URL structure</span>
+            </div>
+            <div class="box-body">
+                <div id="jstree" class="hidden">
+                    {{ parentTreeHTML|raw }}
+                </div>
+            </div>
+            <div class="invisible">{{ form_widget(form.parent) }}</div>
+            <div class="box-body">
+                <label class="control-label">Selected Parent</label>
+                <p id="page_parent_text">{% if page.parent != null %}{{page.parent}}{% else %}Root{% endif %}</p>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header with-border">
+                <label class="control-label">SEO Metatags</label>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    {{ form_label(form.metatitle) }}
+                    {{ form_widget(form.metatitle) }}
+                    <span class="help-block">If this is left blank the page title will be used</span>
+                </div>
+                {{ form_row(form.metadescription) }}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 col-xs-12" >
+        {{ form_row(form.url) }}
+        <div class="form-group {% if urlerror %}has-error{% endif %}">
+            <label class="control-label">URL Preview <img id="slug_preview_loader" src="/control/ajax-loader.gif" /></label><a id="showAdvancedButton" class="sm-text">Show Advanced</a>
+            <div id="advancedArea">
+                <div class="form-group">
+                    <p>Add extra url segments - use only if you want to add a dynamic segment within the current url</p>
+                    <div id="page_extraUrlsegments" data-segmentcount='{{ form.extraUrlsegments|length }}'>
+                        <ul id="extraUrlsegments-fields-list" data-prototype="{{ form_widget(form.extraUrlsegments.vars.prototype)|e }}">
+                        {% for extraUrlsegmentsField in form.extraUrlsegments %}
+                           <li>
+                               <div id="page_extraUrlsegments_{{loop.index0}}">
+                                   <div class="form-group">
+                                   {{ form_widget(extraUrlsegmentsField.urlsegment) }}&nbsp;<a class="removeExtraurl">Remove</a>
+                                   </div>
+                               </div>
+                           </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <a href="#" id="insertUrlSegment">Add Segment</a>
+                </div>
+            </div>
+            <span id="slug_preview" data-defaultslug="{{removeBracesFromSlug(page.slug)}}" disabled class="form-control">/{{page.slug}}</span>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-xs-12" >
+        {{ form_row(form.content) }}
+
+
+        <div class="box">
+            <div class="box-header with-border">
+                <label class="control-label">HTML Blocks <img id="template_html_loader" src="/control/ajax-loader.gif" /></label>
+                <span class="help-block">HTML Block are extra editable areas of the page</span>
+            </div>
+            <div class="box-body html-area">
+            {% for availableHtmlSpace in availableHtmlSpaces %}
+                {% set spaceIndex = loop.index0 %}
+                <div class="form-group">
+                    <label class="control-label">{{ availableHtmlSpace }}</label>
+                    {% for com in form.htmlblocks if com.position.vars.value == availableHtmlSpace %}
+                        {{ form_widget(com.blockId, { 'name': 'name="page[htmlblocks]['~ spaceIndex ~'][route]' }) }}
+                        {{ form_errors(com.blockId) }}
+                        {{ form_widget(com.position, { 'name': 'name="page[htmlblocks]['~ spaceIndex ~'][position]', 'value':availableHtmlSpace }) }}
+                        {{ form_errors(com.position) }}
+                    {% else %}
+                        <select class="form-control" id="form_htmlblocks_name_{{spaceIndex}}" name="page[htmlblocks][{{spaceIndex}}][route]">
+                            <option value>None</option>
+                            {% for cmsHtml in cmsHtmlArray %}
+                            <option data-slug="{{cmsHtml.slug}}" data-urlbased="{% if cmsHtml.slug !="" %}1{% else %}0{% endif %}" value="{{cmsHtml.id}}" >{{cmsHtml.title}}</option>
+                            {% endfor %}
+                        </select>
+                        <input name="page[htmlblocks][{{spaceIndex}}][position]" type="hidden" value="{{ availableHtmlSpace }}"/>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-group"><p>No HTML blocks available on this template</p></div>
+            {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="col-sm-12 col-xs-12" >
+        <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok" ></span>Save
+        </button>
+
+        <a href="{{ path('control_page_index') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-triangle-left" ></span>Back
+        </a>
+
+        {% if page.id is defined and page.id matches '/^\\d+$/' %}
+        <a href="{{ path('control_page_delete', {'id': page.id}) }}" class="btn btn-danger right">
+            <span class="glyphicon glyphicon-trash" ></span>Delete
+        </a>
+        {% endif %}
+    </div>
+
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('/control/js/protocms-page.js')}}"></script>
+{% endblock %}
+{% block stylesheets %}
+
+{% endblock %}

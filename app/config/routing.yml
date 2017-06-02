@@ -1,0 +1,93 @@
+prototype_meet_the_team:
+    resource: "@PrototypeMeetTheTeamBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+prototype_case_studies:
+    resource: "@PrototypeCaseStudiesBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+prototype_page_html_blocks:
+    resource: "@PrototypePageBundle/Controller/HtmlBlocksController.php"
+    type:     annotation
+
+prototype_slider:
+    resource: "@PrototypeSliderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+prototype_catalog:
+    resource: "@PrototypeCatalogBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+prototype_enquiry:
+    resource: "@PrototypeEnquiryBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+prototype_menu:
+    resource: "@PrototypeMenuBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+prototype_news:
+    resource: "@PrototypeNewsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+prototype_user:
+    resource: "@PrototypeUserBundle/Controller/"
+    type: annotation
+    prefix: /
+
+prototype_placeholder:
+    resource: "@PrototypePageBundle/Controller/PlaceholderComponentsController.php"
+    type: annotation
+
+prototype_htmlblocks:
+    resource: "@PrototypePageBundle/Controller/HtmlBlocksController.php"
+    type: annotation
+
+prototype_htmlblocks_translations:
+    resource: "@PrototypePageBundle/Controller/HtmlBlocksTranslationController.php"
+    type: annotation
+
+prototype_page:
+    resource: "@PrototypePageBundle/Controller/PageController.php"
+    type: annotation
+    prefix: /control
+
+prototype_page_translations:
+    resource: "@PrototypePageBundle/Controller/PageTranslationController.php"
+    type: annotation
+    prefix: /control
+
+prototype_admin:
+    resource: "@PrototypeAdminBundle/Controller/"
+    type: annotation
+    prefix: /control
+
+#_liip_imagine:
+#    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+# Its important that this is last ( tries to match all routes or 404s )
+prototype_default:
+    resource: "@PrototypePageBundle/Controller/DefaultController.php"
+    type: annotation
+    prefix: /
+
+
+#prototype_generator:
+#    resource: "@PrototypeGeneratorBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+
+
+
+#app:
+#    resource: "@AppBundle/Controller/"
+#    type:     annotation
+#    prefix:   /

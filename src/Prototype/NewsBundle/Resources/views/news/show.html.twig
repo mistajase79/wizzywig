@@ -1,0 +1,69 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}News Overview{% endblock %}
+{% block subtext %}View all News{% endblock %}
+
+{% block body %}
+
+	<table>
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ news.id }}</td>
+			</tr>
+			<tr>
+				<th>Title</th>
+				<td>{{ news.title }}</td>
+			</tr>
+			<tr>
+				<th>Slug</th>
+				<td>{{ news.slug }}</td>
+			</tr>
+			<tr>
+				<th>Subtitle</th>
+				<td>{{ news.subtitle }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				<td>{{ news.image }}</td>
+			</tr>
+			<tr>
+				<th>Thumbnail</th>
+				<td>{{ news.thumbnail }}</td>
+			</tr>
+			<tr>
+				<th>Article</th>
+				<td>{{ news.article }}</td>
+			</tr>
+			<tr>
+				<th>Exert</th>
+				<td>{{ news.exert }}</td>
+			</tr>
+			<tr>
+				<th>Publishdate</th>
+				<td>{% if news.publishDate %}{{ news.publishDate|date('Y-m-d') }}{% endif %}</td>
+			</tr>
+			<tr>
+				<th>Createdat</th>
+				<td>{% if news.createdAt %}{{ news.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+			</tr>
+			<tr>
+				<th>Updatedat</th>
+				<td>{% if news.updatedAt %}{{ news.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+			</tr>
+			<tr>
+				<th>Active</th>
+				<td>{% if news.active %}Yes{% else %}No{% endif %}</td>
+			</tr>
+			<tr>
+				<th>Deleted</th>
+				<td>{% if news.deleted %}Yes{% else %}No{% endif %}</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<div>
+		<a  href="{{ path('control_news_index') }}" class="btn btn-primary">
+			<span class="glyphicon glyphicon-triangle-left" ></span>Back
+		</a>	</div>
+{% endblock %}

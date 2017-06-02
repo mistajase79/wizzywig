@@ -1,0 +1,102 @@
+/* ---------------------------- */
+/* PCGC SLIDER                  */
+/* ---------------------------- */
+.pcgc-slider-container{
+  width: 100%;
+  position: relative;
+}
+
+.pcgc-slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+ul.pcgc-slider {
+  width: 100%;
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  display: none;
+}
+
+ul.pcgc-slider:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+li.pcgc-slide {
+  width: 100%;
+  height: auto;
+  float:left;
+}
+
+li.pcgc-slide img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
+.fader li.pcgc-slide {
+  //display: none;
+  position: absolute;
+  float: none;
+  z-index: 0;
+}
+
+.fader li.pcgc-slide:first-of-type {
+  z-index: 1;
+}
+
+.slide li.pcgc-slide {
+    float: left;
+    position: relative;
+    display: block;
+}
+
+ul.pcgc-slider-controls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 9999;
+}
+
+ul.pcgc-slider-markers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+ul.pcgc-slider-markers.center {
+  text-align: center;
+}
+
+ul.pcgc-slider-markers li {
+  display: inline;
+}
+
+ul.pcgc-slider-markers li a {
+  display: inline-block;
+}
+
+p.pcgc-slider-caption {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 2%;
+  position: absolute;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  color: #FFFFFF;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}

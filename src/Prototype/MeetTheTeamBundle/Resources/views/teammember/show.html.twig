@@ -1,0 +1,60 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Teammember{% endblock %}
+{% block subtext %}Views a single Teammember{% endblock %}
+
+
+{% block body %}
+    <h1>TeamMember</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ teamMember.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ teamMember.name }}</td>
+            </tr>
+            <tr>
+                <th>Position</th>
+                <td>{{ teamMember.position }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ teamMember.description }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ teamMember.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ teamMember.image }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if teamMember.createdAt %}{{ teamMember.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if teamMember.updatedAt %}{{ teamMember.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

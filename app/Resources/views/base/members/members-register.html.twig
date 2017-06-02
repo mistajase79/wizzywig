@@ -1,0 +1,18 @@
+{% extends '@theme/base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+  <h1>Member Register</h1>
+
+  {{ form_start(form) }}
+      {{ form_row(form.username) }}
+      {{ form_row(form.email) }}
+      {{ form_row(form.plainPassword.first) }}
+      {{ form_row(form.plainPassword.second) }}
+
+      <button type="submit">Register</button>
+  {{ form_end(form) }}
+
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}

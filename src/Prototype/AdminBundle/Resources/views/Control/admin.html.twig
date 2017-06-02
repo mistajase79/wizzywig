@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ProtoCMS v2.0</title>
+
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/bootstrap/css/bootstrap.min.css') }}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('/control/font-awesome-4.5.0/css/font-awesome.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/dist/css/skins/skin-blue.min.css')}}">
+
+	<!-- Plugin stylesheets -->
+	<link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/datatables/dataTables.bootstrap.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/select2/select2.min.css')}}">
+    <link rel="stylesheet" media="screen"  type="text/css" href="{{ asset('/control/adminlte/plugins/lou-multi-select/css/multi-select.css')}}">
+
+    <!-- WYSIWYG - bundled all redactor css files into single include -->
+    {% include 'PrototypeAdminBundle:Widgets:redactor-css-imports.html.twig' %}
+
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/datepicker/datepicker3.css')}}">
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/datetimepicker/bootstrap-datetimepicker.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/control/adminlte/plugins/jstree/dist/themes/default/style.min.css')}}" />
+    {% block stylesheets %}{% endblock %}
+	<!-- ProtoCMS -->
+	<link rel="stylesheet" href="{{ asset('/control/css/protocms.css')}}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <!--
+  BODY TAG OPTIONS:
+  =================
+  Apply one or more of the following classes to get the
+  desired effect
+  |---------------------------------------------------------|
+  | SKINS         | skin-blue                               |
+  |               | skin-black                              |
+  |               | skin-purple                             |
+  |               | skin-yellow                             |
+  |               | skin-red                                |
+  |               | skin-green                              |
+  |---------------------------------------------------------|
+  |LAYOUT OPTIONS | fixed                                   |
+  |               | layout-boxed                            |
+  |               | layout-top-nav                          |
+  |               | sidebar-collapse                        |
+  |               | sidebar-mini                            |
+  |---------------------------------------------------------|
+  -->
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+		{{ render(controller('PrototypeAdminBundle:Default:showAdminHeader', {'request':app.request})) }}
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <h1>ProtoCMS v2 - {% block title %}{% endblock %}</h1>
+            <small>{% block subtext %}{% endblock %}</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="/control/dash"><i class="fa fa-dashboard"></i> Dash</a></li>
+        	{{cmsBreadcrumb(app.request.requestUri)}}
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+			{% for flash_message in app.session.flashbag.get('success') %}
+			<div class="alert alert-success alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<p><i class="icon fa fa-check"></i> <strong>Success!</strong><br/>
+				<span>{{ flash_message }}</span></p>
+			</div>
+			{% endfor %}
+			{% for flash_message in app.session.flashbag.get('error') %}
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<p><i class="icon fa fa-ban"></i> <strong>Error!</strong><br/>
+					<span>{{ flash_message }}</span></p>
+				</div>
+			{% endfor %}
+			{% for flash_message in app.session.flashbag.get('notice') %}
+			<div class="alert alert-info alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<p><i class="icon fa fa-info"></i> <strong>Information</strong><br/>
+				<span>{{ flash_message }}</span></p>
+			</div>
+			{% endfor %}
+			{% for flash_message in app.session.flashbag.get('warning') %}
+			<div class="alert alert-warning alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<p><i class="icon fa fa-warning"></i> <strong>Warning!</strong><br/>
+				<span>{{ flash_message }}</span></p>
+			</div>
+			{% endfor %}
+
+			{% block body %}{% endblock %}
+
+
+		</section><!-- /.content -->
+	</div><!-- /.content-wrapper -->
+
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+          01709 761129 / studio@prototypecreative.co.uk
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; {{ "now"|date('Y') }} <a href="#">Prototype Creative</a></strong>
+      </footer>
+
+      {# BUTTY: Removed the right sideout sidebar (cog button in header also commented out)
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+          <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane active" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                    <p>Will be 23 on April 24th</p>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Custom Template Design
+                    <span class="label label-danger pull-right">70%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+          </div><!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
+          <!-- Settings tab content -->
+          <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+              <h3 class="control-sidebar-heading">General Settings</h3>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Report panel usage
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Some information about this general settings option
+                </p>
+              </div><!-- /.form-group -->
+            </form>
+          </div><!-- /.tab-pane -->
+        </div>
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+      #}
+    </div><!-- ./wrapper -->
+
+    {% include 'PrototypeAdminBundle:Widgets:imagemanager.html.twig' %}
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="{{ asset('/control/adminlte/plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
+	<!-- <script src="{{ asset('/control/adminlte/plugins/jQuery/jquery-1.11.3.min')}}"></script> -->
+	<script src="{{ asset('/control/adminlte/plugins/jQueryUI/jquery-ui.min.js')}}"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="{{ asset('/control/adminlte/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!-- AdminLTE App -->
+	<script src="{{ asset('/control/adminlte/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+    <script src="{{ asset('/control/adminlte/dist/js/app.min.js')}}"></script>
+
+	<!-- Plugins -->
+    <script src="{{ asset('/control/adminlte/plugins/select2/select2.min.js')}}"></script>
+	<script src="{{ asset('/control/adminlte/plugins/datatables/jquery.dataTables.js')}}"></script>
+	<script src="{{ asset('/control/adminlte/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+	<script src="{{ asset('/control/js/jquery.mjs.nestedSortable.js')}}"></script>
+    <script src="{{ asset('/control/adminlte/plugins/lou-multi-select/js/jquery.multi-select.js')}}"></script>
+
+    <!-- WYSIWYG - bundled all redactor js files into single include -->
+    {% include 'PrototypeAdminBundle:Widgets:redactor-js-imports.html.twig' %}
+
+    <!-- Tree View -->
+    <script src="{{ asset('/control/adminlte/plugins/jstree/dist/jstree.js')}}"></script>
+    <script src="{{ asset('/control/adminlte/plugins/jstree/src/jstree.state.js')}}"></script>
+    <!-- Date & Time Pickers -->
+    <script src="{{ asset('/control/js/moment.js')}}"></script>
+    <script src="{{ asset('/control/adminlte/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+    <script src="{{ asset('/control/adminlte/plugins/datetimepicker/bootstrap-datetimepicker.js')}}"></script>
+
+	<!-- ProtoCMS -->
+	<script src="{{ asset('/control/js/protocms.js')}}"></script>
+    <script src="{{ asset('/control/js/protocms-imagemanager.js')}}"></script>
+
+	{% block javascripts %}{% endblock %}
+
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+         Both of these plugins are recommended to enhance the
+         user experience. Slimscroll is required when using the
+         fixed layout. -->
+  </body>
+</html>

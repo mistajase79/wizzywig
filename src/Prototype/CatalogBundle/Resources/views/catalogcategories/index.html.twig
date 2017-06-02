@@ -1,0 +1,44 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Catalog Categories Overview{% endblock %}
+{% block subtext %}View all Catalog Categories{% endblock %}
+
+{% block body %}
+<a href="{{ path('control_catalog_categories_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create Catalog Category
+</a>
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for catalogCategory in catalogCategories %}
+            <tr>
+                <td>{{ catalogCategory.id }}</td>
+                <td>
+                     {{catalogCategory.title }}
+                     {% if multilingual %}<br/>{{ viewAvailableTranslations( catalogCategory ) }}{% endif %}
+                </td>
+                <td>{{ wordLimit(catalogCategory.description, 15) }}</td>
+                <td>{% if catalogCategory.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a  href="{{ path('control_catalog_categories_edit', { 'id': catalogCategory.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+                    {% if multilingual %}
+                    <a data-toggle="tooltip" title="Add Translation" href="{{ path('control_catalog_categories_translation_new', { 'id': catalogCategory.id }) }}" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-globe zeromargin" ></span>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

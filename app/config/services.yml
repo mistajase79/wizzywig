@@ -1,0 +1,47 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+
+    pcgc_locale_listener:
+        class: Prototype\PageBundle\EventListener\LocaleListener
+        arguments: ['%kernel.default_locale%']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    pcgc_page_service:
+        class: Prototype\PageBundle\Service\ServiceController
+        arguments: ["@kernel", "@doctrine"]
+
+    pcgc_translation_services:
+        class: Prototype\AdminBundle\Service\TranslationService
+        arguments: ["@kernel", "@doctrine"]
+
+    pcgc_catalog_services:
+        class: Prototype\CatalogBundle\Service\CatalogService
+        arguments: ["@kernel", "@doctrine"]
+
+    page.twig_extension:
+        class: Prototype\PageBundle\Twig\TwigExtension
+        public: false
+        arguments: ["@kernel", "@router", "@doctrine", "@security.authorization_checker"]
+        tags:
+            - { name: twig.extension }
+
+    admin.twig_extension:
+        class: Prototype\AdminBundle\Twig\AdminTwigExtension
+        public: false
+        arguments: ["@kernel", "@router", "@doctrine", "@request_stack"]
+        tags:
+            - { name: twig.extension }
+
+    admin.imagemanager_type_extension:
+        class: Prototype\AdminBundle\Form\Extension\imagemanagerExtension
+        tags:
+            - { name: form.type_extension, extended_type: Prototype\AdminBundle\Form\Type\imagemanagerType }
+
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

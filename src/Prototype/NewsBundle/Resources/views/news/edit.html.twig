@@ -1,0 +1,16 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update News{% endblock %}
+{% block subtext %}Updates existing News{% endblock %}
+
+{% block body %}
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <div>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok" ></span>Update</button>
+            <a href="{{ path('control_news_index') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-triangle-left" ></span>Back
+            </a>
+        </div>
+    {{ form_end(edit_form) }}
+{% endblock %}

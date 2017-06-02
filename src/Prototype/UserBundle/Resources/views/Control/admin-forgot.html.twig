@@ -1,0 +1,17 @@
+{% extends 'PrototypeAdminBundle:Control:cms_account_base.html.twig' %}
+{% block pagetitle %}Forgot Password{% endblock %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+
+    <div class="login-box-body">
+      <p class="login-box-msg">{{"login.forgot_password?"|trans()}}</p>
+      {% if error %}
+          <div class="alert alert-danger">{{ error.message }}</div>
+      {% endif %}
+          <form action="{{ path('forgot_cms_password') }}" method="post">
+              {{form_row(form.email)}}
+              <input type="submit" value="{{"login.send_request"|trans()}}" />
+          {{ form_end(form) }}
+        </div><!-- /.login-box-body -->
+
+{% endblock %}

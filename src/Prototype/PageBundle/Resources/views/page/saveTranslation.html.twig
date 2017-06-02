@@ -1,0 +1,78 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Page Translation{% endblock %}
+{% block subtext %}Modify page translation{% endblock %}
+{% block body %}
+
+<div class="box-body">
+
+    <input type="hidden" id="page_parent" value="{% if page.parent %}{{page.parent.id}}{% endif %}"/>
+    {% for cmsComponent in cmsComponentArray %}
+        {% for component in page.components if cmsComponent.route == component.route and cmsComponent.route !="" %}
+            <input class="selected-component" type="hidden" data-slug="{{cmsComponent.slug}}" data-urlbased="{% if cmsComponent.slug !="" %}1{% else %}0{% endif %}" value="{{cmsComponent.route}}" />
+        {% endfor %}
+    {% endfor %}
+
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div class="col-sm-6 col-xs-12" >
+        {% if locale is defined  %}
+        {{ showCurrentLocale(locale) }}
+        {% endif %}
+
+        {{ form_row(form.translatableLocale)}}
+        {{ form_row(form.title) }}
+        {{ form_row(form.navtitle) }}
+    </div>
+
+    <div class="col-sm-6 col-xs-12" >
+        <div class="box">
+            <div class="box-header with-border">
+                <label class="control-label">SEO Metatags</label>
+            </div>
+            <div class="box-body">
+                {{ form_row(form.metatitle) }}
+                {{ form_row(form.metadescription) }}
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-12 col-xs-12" >
+        {{ form_row(form.url) }}
+        <div class="form-group">
+            <label class="control-label">URL Preview <img id="slug_preview_loader" src="/control/ajax-loader.gif" /></label>
+            <span id="slug_preview" disabled class="form-control">/{{page.slug}}</span>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-xs-12" >
+        {{ form_row(form.content) }}
+    </div>
+
+
+    <div class="col-sm-12 col-xs-12" >
+        <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok" ></span>Save
+        </button>
+
+        <a href="{{ path('control_page_index') }}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-triangle-left" ></span>Back
+        </a>
+    </div>
+
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': true}) }}
+
+    {% for extra in page.extraUrlsegments %}
+    <input type="hidden" value="{{extra.urlsegment}}" class="page_extraUrlsegments" />
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('/control/js/protocms-page.js')}}"></script>
+{% endblock %}

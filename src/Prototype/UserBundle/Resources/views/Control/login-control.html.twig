@@ -1,0 +1,28 @@
+{% extends 'PrototypeAdminBundle:Control:cms_account_base.html.twig' %}
+{% block pagetitle %}Login{% endblock %}
+{% block body %}
+
+      <div class="login-box-body">
+        <p class="login-box-msg">{{"login.start_session"|trans()}}</p>
+        <form action="{{ path('control_check') }}" method="post">
+          <input type="hidden" name="_target_path" value="/control/dash" />
+          <div class="form-group has-feedback">
+            <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" />
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" id="password" class="form-control" name="_password" />
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+            </div><!-- /.col -->
+            <div class="col-xs-6">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">{{"login.sign_in"|trans()}}</button>
+            </div><!-- /.col -->
+          </div>
+        </form>
+        <a href="{{path('forgot_cms_password')}}">{{"login.i_forgot_password"|trans()}}</a><br>
+      </div><!-- /.login-box-body -->
+
+{% endblock %}

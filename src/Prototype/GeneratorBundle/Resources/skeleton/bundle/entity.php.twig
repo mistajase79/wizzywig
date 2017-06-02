@@ -1,0 +1,103 @@
+<?php
+
+namespace Prototype\{{ shortname }}Bundle\Entity;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Prototype\PageBundle\Custom\Custom;
+
+/**
+ * {{ shortname }}
+ *
+ * @ORM\Table(name="{{ shortname|lower }}")
+ * @ORM\Entity(repositoryClass="Prototype\{{ shortname }}Bundle\Repository\{{ shortname }}Repository")
+ * @Gedmo\Loggable
+ * @Gedmo\TranslationEntity(class="Prototype\{{ shortname }}Bundle\Entity\{{ shortname }}Translations")
+ */
+class {{ shortname }} implements Translatable
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+	 * @Assert\NotBlank(message="The title should not be blank")
+     * @Gedmo\Translatable
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+    * @Gedmo\Translatable
+    * @Gedmo\Slug(fields={"title"}, separator="-", updatable=true)
+    * @ORM\Column(length=255, unique=true)
+    */
+    private $slug;
+
+    /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+      * @Gedmo\Timestampable(on="update")
+      * @ORM\Column(type="datetime")
+      */
+    private $updatedAt;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $active = true;
+    /**
+      * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $deleted = false;
+
+
+    public function __toString(){
+      return $this->getTitle();
+    }
+
+    // Used by the imagemanager
+    public function getFilePath(){
+        return "userfiles/images/{{ shortname|lower }}";
+    }
+
+    public function getFullImagePath()
+    {
+        return $this->getFilePath().'/'.$this->image;
+    }
+
+    public function setTranslatableLocale($locale){
+       $this->locale = $locale;
+    }
+
+}

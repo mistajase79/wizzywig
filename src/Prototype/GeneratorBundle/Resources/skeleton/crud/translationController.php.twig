@@ -1,0 +1,49 @@
+<?php
+
+namespace {{ namespace }}\Controller{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+{% block use_statements %}
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use {{ namespace }}\Entity\{{ original_entity }};
+use Symfony\Component\Form\FormError;
+{% if 'new' in actions or 'edit' in actions %}
+//use {{ namespace }}\Form\{{ entity }}Type;
+const {{ entity }}Type = '{{ namespace }}\Form\{{ entity }}Type';
+{% endif %}
+{% endblock use_statements %}
+
+/**
+{% block phpdoc_class_header %}
+ * {{ entity }} controller.
+{% endblock phpdoc_class_header %}
+ *
+{% block phpdoc_class_annotations %}
+{% if 'annotation' == format %}
+ * @Route("/{{ route_prefix }}")
+{% endif %}
+{% endblock phpdoc_class_annotations %}
+ */
+{% block class_definition %}
+class {{ entity_class }}Controller extends Controller
+{% endblock class_definition %}
+{
+{% block class_body %}
+    {%- if 'new' in actions %}
+        {%- include 'crud/actions/newtrans.php.twig' %}
+    {%- endif %}
+
+    {%- if 'edit' in actions %}
+        {%- include 'crud/actions/edittrans.php.twig' %}
+    {%- endif %}
+
+{#
+    {%- if 'delete' in actions %}
+        {%- include 'crud/actions/transdelete.php.twig' %}
+    {%- endif %}
+#}
+{% endblock class_body %}
+}

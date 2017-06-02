@@ -1,0 +1,23 @@
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+{% for availableHtmlSpace in availableHtmlSpaces %}
+    {% set spaceIndex = loop.index0 %}
+    <div class="form-group">
+        <label class="control-label">{{ availableHtmlSpace }}</label>
+        {% for com in edit_form.htmlblocks if com.position.vars.value == availableHtmlSpace %}
+            {{ form_widget(com.blockId, { 'name': 'name="page[htmlblocks]['~ spaceIndex ~'][route]' }) }}
+            {{ form_errors(com.blockId) }}
+            {{ form_widget(com.position, { 'name': 'name="page[htmlblocks]['~ spaceIndex ~'][position]', 'value':availableHtmlSpace }) }}
+            {{ form_errors(com.position) }}
+        {% else %}
+            <select class="form-control" id="form_htmlblocks_name_{{spaceIndex}}" name="page[htmlblocks][{{spaceIndex}}][route]">
+                <option value>None</option>
+                {% for cmsHtml in cmsHtmlArray %}
+                <option data-slug="{{cmsHtml.slug}}" data-urlbased="{% if cmsHtml.slug !="" %}1{% else %}0{% endif %}" value="{{cmsHtml.id}}" >{{cmsHtml.title}}</option>
+                {% endfor %}
+            </select>
+            <input name="page[htmlblocks][{{spaceIndex}}][position]" type="hidden" value="{{ availableHtmlSpace }}"/>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="form-group"><p>No HTML blocks available on this template</p></div>
+{% endfor %}

@@ -1,0 +1,13 @@
+login:
+    username: 'Username'
+    password: 'Password'
+    start_session: 'Melden Sie sich an, um Ihre Sitzung zu starten'
+    i_forgot_password: 'Ich habe mein Passwort vergessen'
+    sign_in: 'Anmeldung'
+    forgot_password?: 'Haben Sie Ihr Passwort vergessen?'
+    email_address: 'E-Mail-Addresse'
+    email: 'email'
+    send_request: 'Anfrage senden'
+
+Previous: Bisherige
+Next: Nächster

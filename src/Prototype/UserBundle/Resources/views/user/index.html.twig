@@ -1,0 +1,57 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Users Overview{% endblock %}
+{% block subtext %}View all Users{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <a href="{{ path('control_user_new') }}" class="btn btn-primary">
+      <span class="glyphicon glyphicon-plus" ></span>Create User
+    </a>
+    {% endif %}
+
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Profile</th>
+                <th class="hidden-md hidden-sm hidden-xs">Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th class="hidden-xs">Active</th>
+                <th class="hidden-sm hidden-xs">Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td style="width:60px; text-align:center">
+                    {% if user.profileimage != "" %}
+                    <img width="50px" class="img-circle" src="{{user.profileimage}}" alt="{{user.name}}"  />
+                    {% endif %}
+                </td>
+                <td class="hidden-md hidden-sm hidden-xs">{{user.name}}</td>
+                <td>{{user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td class="hidden-xs">{% if user.isActive %}Yes{% else %}No{% endif %}</td>
+                <td class="hidden-sm hidden-xs">{% if user.roles %}{{ user.roles|join('<br/>')|raw }}{% endif %}</td>
+                <td>
+                    {% if is_granted('ROLE_SUPER_ADMIN') or user.id == app.user.id %}
+                    <a title="Edit User" data-toggle="tooltip" href="{{ path('control_user_edit', { 'id': user.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+                    <a title="Change Password" data-toggle="tooltip" href="{{ path('control_user_edit_password', { 'id': user.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-lock zeromargin" ></span>
+                    </a>
+                    {% else %}
+                    <a title="View User" data-toggle="tooltip" href="{{ path('control_user_show', { 'id': user.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-eye-open zeromargin" ></span>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

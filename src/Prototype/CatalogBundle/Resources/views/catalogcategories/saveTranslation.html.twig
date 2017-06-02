@@ -1,0 +1,24 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block title %}Update Catalog Category Translation{% endblock %}
+{% block subtext %}Updates existing Catalog Category Translation{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+        {% if locale is defined  %}
+        {{ showCurrentLocale(locale) }}
+        {% endif %}
+
+
+    <div>
+    <button type="submit" class="btn btn-success">
+    <span class="glyphicon glyphicon-ok" ></span>Save
+    </button>
+    <a  href="{{ path('control_catalog_categories_index') }}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-triangle-left" ></span>Back
+    </a>
+    </div>
+{{ form_end(form) }}
+{% endblock %}

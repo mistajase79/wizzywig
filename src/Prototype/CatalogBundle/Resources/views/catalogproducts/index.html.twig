@@ -1,0 +1,51 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Catalog Products Overview{% endblock %}
+{% block subtext %}View all Catalog Products{% endblock %}
+
+{% block body %}
+<a href="{{ path('control_catalog_products_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create Product
+</a>
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Id</th>
+                <th>Title</th>
+                <!-- <th>Description</th> -->
+                <th>Price</th>
+
+                <th>Category</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for catalogProduct in catalogProducts %}
+            <tr>
+                <td width="50px"><img src="{{ imageCache('/userfiles/images/catalog/products/' ~ catalogProduct.image, 'cropResize', 50, 50) }}" alt="{{catalogProduct.title }}"/></td>
+                <td>{{ catalogProduct.id }}</td>
+                <td>
+                     {{catalogProduct.title }}
+                     {% if multilingual %}<br/>{{ viewAvailableTranslations( catalogProduct ) }}{% endif %}
+                </td>
+                <!-- <td>{{ catalogProduct.description }}</td> -->
+                <td>{{ catalogProduct.price }}</td>
+                <td>{{ catalogProduct.category }}</td>
+                <td>{% if catalogProduct.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a  href="{{ path('control_catalog_products_edit', { 'id': catalogProduct.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+                    {% if multilingual %}
+                    <a data-toggle="tooltip" title="Add Translation" href="{{ path('control_catalog_products_translation_new', { 'id': catalogProduct.id }) }}" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-globe zeromargin" ></span>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

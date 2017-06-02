@@ -1,0 +1,13 @@
+login:
+    username: 'Username'
+    password: 'Password'
+    start_session: 'Sign in to start your session'
+    i_forgot_password: 'I forgot my password'
+    sign_in: 'Sign In'
+    forgot_password?: 'Forgot your password?'
+    email_address: 'Email Address'
+    email: 'email'
+    send_request: 'Send Request'
+
+Previous: Previous
+Next: Next
