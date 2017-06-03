@@ -144,7 +144,7 @@ class PcgcInitialiseCmsCommand extends ContainerAwareCommand
 
         $menuitem = new MenuItems();
         $menuitem->setMenuItemId(1);
-		$menuitem->setMenuOverride('Home');
+		$menuitem->setNameOverride('Home');
         $menuitem->setActive(1);
         $menuitem->setDeleted(0);
         $menuitem->setCreatedAt($dateTime);
