@@ -24,7 +24,7 @@ class TeamMemberController extends Controller
     *
     * @Route("/", name="control_meettheteam_teammember_index")
     * @Method("GET")
-    * @ProtoCmsAdminDash("TeamMember Overview", active=true, routeName="control_meettheteam_teammember_index", icon="glyphicon glyphicon-list", menuPosition=9999,   parentRouteName="control_content_index")
+    * @ProtoCmsAdminDash("Team Members", active=true, routeName="control_meettheteam_teammember_index", icon="glyphicon glyphicon-list", menuPosition=9999,   parentRouteName="control_content_index")
     */
     public function indexAction()
     {

@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <a href="#" title="Search" class="search-button search-a hidden-xs pull-right"></a>
+    <div class="navbar-header">
+
+        <a href="#" title="Search" class="search-button search-a hidden-sm hidden-md hidden-lg"></a>
+
+        <button id="minimise-button" href="#" title="Hide" class="min navbar-toggle collapsed" data-toggle="collapse" data-target="#pcgc-menu-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="pcgc-menu-1">
+        {{ render(controller('PrototypeMenuBundle:Default:fetchBootstrapMenu', { 'identifier':'Top', 'currentUrl': app.request.pathinfo })) }}
+    </div>
+
+    <!--Search-->
+    <div class="search-pop-up">
+        <div class="search-container">
+          <form action="" method="get">
+              <div class="search-input-wrap">
+                  <input id="search-input" value="" class="search-input" name="query" />
+              </div>
+              <div class="search-button-wrap">
+                  <input name="go" type="submit" value="Go" />
+              </div>
+          </form>
+        </div>
+    </div>
+    <!--End Search-->
+</div>

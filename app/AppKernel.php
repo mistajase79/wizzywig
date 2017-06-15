@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Prototype\SliderBundle\PrototypeSliderBundle(),
             new Prototype\CaseStudiesBundle\PrototypeCaseStudiesBundle(),
             new Prototype\MeetTheTeamBundle\PrototypeMeetTheTeamBundle(),
+            new Prototype\BlogBundle\PrototypeBlogBundle(),
         );
 
 

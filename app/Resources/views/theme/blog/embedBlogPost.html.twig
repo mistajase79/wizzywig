@@ -1,0 +1,123 @@
+<!--Blog Article-->
+        <div class="blog-article clearfix">
+          {% if post.image != "" %}
+            <div class="blog-article-image clearfix">
+                <img src="{{ imageCache('/userfiles/images/blog/' ~ post.image, 'zoomCrop', 800, 350) }}" alt="{{post.title}}" class="img-responsive" />
+            </div>
+          {% endif %}
+            <div class="social-likes clearfix">
+                <div class="like-twitter">
+                    <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                </div>
+                <div class="like-buzz">
+                    <a title="Post to Google Buzz" class="google-buzz-button" href="http://www.google.com/buzz/post" data-button-style="small-count" data-locale="en_GB"></a>
+										<script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>
+                </div>
+                <div class="like-facebook">
+                    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="" layout="button_count" show_faces="false" width="100" font=""></fb:like>
+                </div>
+            </div>
+
+            <div class="entry-content clearfix">
+              {{ allowInlineEditor(post, 'content')|raw }}
+            </div>
+        </div>
+        <!--End Blog Article-->
+
+         <!--Pagination-->
+        <div class="pagination-wrapper clearfix">
+            <ul>
+                <li><a href="#">&laquo; Back</a></li>
+                <li><a href="#">Next post &raquo;</a></li>
+            </ul>
+        </div>
+        <!--End Pagination-->
+
+        <!--Comments section-->
+        <div class="comments clearfix">
+        <h3 class="comments-title">2 comments</h3>
+
+            <ol class="commentlist">
+                <li class="comment-depth-1">
+
+                    <div class="comment">
+				<!-- comment-author -->
+                        <div class="comment-author">
+                            <img src="/images/avatar1.png" alt="" width="40" height="40" />
+                            <h2><a href="#">Jessi Hance</a> <span class="says">says:</span></h2>
+                        </div>
+
+				<!-- comment-meta -->
+                        <div class="comment-meta">
+                        <a href="#">March 12, 2010 at 6:32 pm</a>
+                        </div>
+
+                   		<!-- comment -->
+                        <div class="comment-body">
+                        <p>I can't tell you how excited I am about all the fantastic features of this new theme, and the fact that it will be the default. I teach beginning WordPress classes, and between the new features of WordPress 3.0 and this wonderful theme, my students are going to find it a lot quicker and easier to make their sites look like they want. This is HUGE.</p>
+                        <p>I haven't helped in any way, but I am deeply grateful to everyone who has contributed to this new level of ease of use.</p>
+                        </div>
+
+                    </div>
+
+                    <ul class="children">
+                        <li class="comment-depth-2">
+                            <div class="comment clearfix">
+                              <!-- comment-author -->
+                               <div class="comment-author">
+                                	<img src="/images/avatar2.png" alt="" width="40" height="40" />
+                                    <h2><a href="#">Matt Thomas</a> <span class="says">says:</span></h2>
+                              </div>
+
+                                <!-- comment-meta -->
+                                <div class="comment-meta">
+                                <a href="#">March 13, 2010 at 7:32 am</a>
+                                </div>
+
+                           	  <!-- comment-->
+                              <div class="comment-body">
+                                <p>Thanks Jessi; that's awfully nice of you. I can't wait to see how people use the theme to create their own designs.</p>
+                              </div>
+
+                            </div>
+
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+
+        </div>
+        <!--End Comments section-->
+
+<!--Comments Form-->
+        <div class="comment-reply clearfix">
+            <h3>Post a comment</h3>
+            <form action="" method="post" id="comment_form">
+            <div class="element-wrapper clearfix">
+                <div class="input-wrapper email-input-wrapper">
+                <input value="Name" type="text" class="textbox" id="form_name" name="name" />
+                </div>
+            </div>
+            <div class="element-wrapper clearfix">
+                <div class="input-wrapper email-input-wrapper">
+                <input value="Email" type="text" class="textbox" id="form_email" name="email" />
+                </div>
+            </div>
+            <div class="element-wrapper clearfix">
+                <div class="input-wrapper email-input-wrapper">
+                <input value="Website" type="text" class="textbox" id="form_website" name="website" />
+                </div>
+            </div>
+            <div class="element-wrapper clearfix">
+                <div class="input-wrapper email-input-wrapper">
+                <textarea class="textbox" cols="25" rows="6" id="form_message" name="message">Comment</textarea>
+                </div>
+            </div>
+            <div class="submit-button-input-wrapper clearfix">
+                <div class="input-wrapper email-input-wrapper">
+                <input type="submit" value="Submit" id="form_submit" name="submit" />
+                </div>
+            </div>
+            </form>
+        </div>
+<!--End Comments Form-->

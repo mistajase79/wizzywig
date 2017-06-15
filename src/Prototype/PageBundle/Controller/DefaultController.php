@@ -762,6 +762,8 @@ class DefaultController extends Controller
 
                         //Get entityID for getMethodRouterAction - used to assist with locale/translation switching
                         $entity = $this->getEntityData( array('component'=>$cmsComponentArray[$comkey], 'slug'=>$component_find_slug), $request, $debug );
+                        if(!$entity){  throw $this->createNotFoundException('PCGC: EntityID not found - has the slug (\''.$component_find_slug.'\') changed?'); }
+
                         $entityId = $entity->getId();
                         // fetch component data
                         if($debug){	echo '<p>SLUG REQUIRED:<br/>RENDERING CONTROLLER = <strong>'.$action['_controller'].'</strong></p>';}

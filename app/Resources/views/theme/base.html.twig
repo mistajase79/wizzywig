@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block metatitle %}Welcome!{% endblock %}</title>
+        <meta name="description" content="{% block metadescription %}Welcome!{% endblock %}">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('/control/adminlte/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/control/font-awesome-4.5.0/css/font-awesome.min.css')}}">
+        {# ADMIN ONLY CSS FILES MERGED INTO SINGLE INCLUDE FILE #}
+        {% include 'PrototypeAdminBundle:Widgets:admin-css-imports.html.twig' %}
+        <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
+        <link rel="stylesheet" href="{{ asset('/css/proto.css')}}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="skin-blue sidebar-collapse sidebar-mini">
+         {{ render(controller('PrototypeAdminBundle:Default:showAdminHeader')) }}
+
+          <header id="header">
+            <div class="container header-position">
+              <div class="col-xs-12 col-sm-3 hidden-xs">
+                <a href="/"><img src="/images/logo-long.png" title="" class="img-responsive logolong" alt="Logo"></a>
+              </div>
+              <div class="col-xs-12 col-sm-3  hidden-sm hidden-md hidden-lg">
+                <a href="/"><img src="/images/logo-long.png" title="" class="img-responsive logoxs" alt="Logo"></a>
+              </div>
+              <div class="col-xs-12 col-sm-9">
+                <div id="nav-wrap">
+                  <div id="nav-wrap-inner">
+                    <nav class="navbar navbar-default">
+                      {% include '@theme/common/main-navigation.html.twig' %}
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </header>
+
+
+        <div class="container">
+            {% include '@theme/common/alert-notifications.html.twig' %}
+            <section class="main">
+                {% block breadcrumbs %}{% endblock %}
+                {% block body %}{% endblock %}
+            </section>
+        </div>
+
+        <!-- Begin Footer -->
+        <div id="footer">
+          <div class="footer-inside clearfix">
+
+            <!--Footers Left Column-->
+            <div class="foot-left-col">Copyright &copy; {{"now"|date('Y')}} - Website devloped by Jason Butler</div>
+            <!--End Footers Left Column-->
+
+            <!--Footers Right Column-->
+            <div class="foot-right-col">
+              <ul class="footer-menu">
+                  <li><a id="social-pop-out-trigger" href="#"><span class="up-ico">Connect with me</span></a></li>
+                  <li><a id="twitter-pop-out-trigger" href="#"><span class="up-ico">Twitter</span></a></li>
+                  <li class="top"><a href="#top" class="scroll-top"><span class="up-ico">Top</span></a></li>
+              </ul>
+
+              <!--Hidden pop out boxes - Social icons-->
+              <div class="footer-pop-out-box social-pop-out-box">
+                  <div class="clearfix">
+                      <div class="one-icon-wrap"><a href="#"><img src="/images/social-icons/facebook.png" width="32" height="32" alt="Facebook" /></a></div>
+                      <div class="one-icon-wrap"><a href="#"><img src="/images/social-icons/delicious.png" width="32" height="32" alt="Delicious" /></a></div>
+                      <div class="one-icon-wrap"><a href="#"><img src="/images/social-icons/flickr.png" width="32" height="32" alt="Flickr" /></a></div>
+                      <div class="one-icon-wrap"><a href="#"><img src="/images/social-icons/rss.png" width="32" height="32" alt="RSS" /></a></div>
+                      <div class="one-icon-wrap"><a href="#"><img src="/images/social-icons/twitter.png" width="32" height="32" alt="Twitter" /></a></div>
+                   </div>
+              </div>
+
+              <!--Hidden pop out boxes - Twitter-->
+              <div class="footer-pop-out-box twitter-pop-out-box">
+                  <div class="twitter-content clearfix" id="twitter_div">Please wait, fetching latest tweets...</div>
+                  <div class="follow-me-button"><a class="button-press" href="#">Follow my tweets</a></div>
+              </div>
+
+            </div>
+            <!--End Footers Right Column-->
+          </div>
+        </div>
+        <!-- End Footer -->
+      </div>
+
+        <script src="{{ asset('/control/adminlte/plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
+        <script src="{{ asset('/control/adminlte/bootstrap/js/bootstrap.min.js')}}"></script>
+
+        {# ADMIN ONLY JAVASCRIPT FILES MERGED INTO SINGLE INCLUDE FILE #}
+        {% include 'PrototypeAdminBundle:Widgets:admin-js-imports.html.twig' %}
+
+        <script src="{{ asset('/js/pcgc-slider.js')}}"></script>
+        <script src="{{ asset('/js/pcgc.js')}}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

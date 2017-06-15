@@ -1,0 +1,28 @@
+{% extends '@theme/base.html.twig' %}
+{% block title %}{{page.title}}{% endblock %}
+{% block metatitle %}{{page.metatitle}}{% endblock %}
+{% block metadescription %}{{page.metadescription}}{% endblock %}
+
+{% block body %}
+<!-- START common\home.html.twig -->
+<section class="main">
+  <!-- Begin HOME PAGE -->
+  <div class="content-outer clearfix">
+    <div class="content-inner">
+
+      <!-- Welcome box -->
+      <div class="left-note-block">
+        <h1>{{page.title}}</h1>
+        {{page.content|raw}}
+      </div>
+      <!-- End welcome box -->
+
+    </div>
+  </div>
+  <!-- End HOME PAGE -->
+</section>
+<!-- END common\home.html.twig -->
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}

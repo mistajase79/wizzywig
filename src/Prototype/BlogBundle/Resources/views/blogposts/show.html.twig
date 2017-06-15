@@ -1,0 +1,64 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}View Blogpost{% endblock %}
+{% block subtext %}Views a single Blogpost{% endblock %}
+
+
+{% block body %}
+    <h1>BlogPosts</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ blogPost.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ blogPost.title }}</td>
+            </tr>
+            <tr>
+                <th>Exert</th>
+                <td>{{ blogPost.exert }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ blogPost.content }}</td>
+            </tr>
+            <tr>
+                <th>Dateposted</th>
+                <td>{% if blogPost.datePosted %}{{ blogPost.datePosted|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ blogPost.slug }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ blogPost.image }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if blogPost.createdAt %}{{ blogPost.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if blogPost.updatedAt %}{{ blogPost.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{% if entity.active %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Deleted</th>
+                <td>{% if entity.deleted %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="right">
+        {{ form_start(delete_form) }}
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        {{ form_end(delete_form) }}
+    </div>
+{% endblock %}

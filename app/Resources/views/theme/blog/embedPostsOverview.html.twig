@@ -1,0 +1,36 @@
+<!--Blog summary example-->
+{% for post in blogposts %}
+<div class="post clearfix">
+		<h2 class="entry-title">
+				<a href="{{generatePath( app.request, 5, {'blogcategory_slug': post.categoryId.slug, 'blogpost_slug': post.slug}  )}}">{{ post.title }}</a>
+		</h2>
+		<!--Date Circle-->
+		<div class="date">
+				<div class="day"><h2>{{post.datePosted|date('d')}}</h2></div>
+				<div class="month">{{post.datePosted|date('M')}}</div>
+		</div>
+
+		<div class="entry-meta">Posted in <a href="#">{{post.categoryId}}</a> by Jase | <a href="{{generatePath( app.request, 7, {'blogcategory_slug': post.categoryId.slug, 'blogpost_slug': post.slug}  )}}#comments">2 comments</a></div>
+		<div class="entry-content clearfix">
+			{% if post.image != "" %}
+				<a href="{{generatePath( app.request, 5, {'blogcategory_slug': post.categoryId.slug, 'blog_post_slug': post.slug}  )}}">
+					<img src="{{ imageCache('/userfiles/images/blog/' ~ post.image, 'zoomCrop', 200, 132) }}" class="post-img img-responsive" alt="{{post.title}}" />
+				</a>
+			{% endif %}
+				{{post.exert|raw}}
+		</div>
+
+		<!--Read More link-->
+		<div class="read-more-link">
+					<a class="more-link" href="{{generatePath( app.request, 5, {'blogcategory_slug': post.categoryId.slug, 'blogpost_slug': post.slug}  )}}">Read more</a>
+		</div>
+
+</div>
+
+{% else %}
+	<div class="post clearfix">
+		No Posts Found
+	</div>
+{% endfor %}
+
+{{ knp_pagination_render(blogposts) }}

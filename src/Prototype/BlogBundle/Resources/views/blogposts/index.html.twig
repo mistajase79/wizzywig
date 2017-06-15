@@ -1,0 +1,48 @@
+{% extends 'PrototypeAdminBundle:Control:admin.html.twig' %}
+{% block title %}Blogposts Overview{% endblock %}
+{% block subtext %}View all Blogposts{% endblock %}
+
+{% block body %}
+<a href="{{ path('control_blogposts_new') }}" class="btn btn-primary">
+  <span class="glyphicon glyphicon-plus" ></span>Create Blog Post
+</a>
+    <table class="datatable table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date Posted</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for blogPost in blogPosts %}
+            <tr>
+
+                <td>{{ blogPost.id }}</td>
+                <td>
+                     {{blogPost.title }}
+                     {% if multilingual %}<br/>{{ viewAvailableTranslations( blogPost ) }}{% endif %}
+                </td>
+
+                <td>{{ blogPost.categoryId.title }}</td>
+                <td>{% if blogPost.datePosted %}{{ blogPost.datePosted|date('d-m-Y') }}{% endif %}</td>
+                <td>{% if blogPost.active %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <a  href="{{ path('control_blogposts_edit', { 'id': blogPost.id }) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil zeromargin" ></span>
+                    </a>
+                    {% if multilingual %}
+                    <a data-toggle="tooltip" title="Add Translation" href="{{ path('control_blogposts_translation_new', { 'id': blogPost.id }) }}" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-globe zeromargin" ></span>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

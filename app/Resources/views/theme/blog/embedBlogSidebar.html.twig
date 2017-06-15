@@ -1,0 +1,26 @@
+
+        <h3>Recent posts</h3>
+          <!--Vertical Menu-->
+          <ul class="vert-nav-ul">
+            {% for recentPost in recentPosts %}
+            <li><a title="{{recentPost.title}}" href="{{generatePath( app.request, 5, {'blogcategory_slug': recentPost.categoryId.slug, 'blogpost_slug': recentPost.slug}  )}}">{{recentPost.title}}</a></li>
+            {% endfor %}
+          </ul>
+          <!--End Vertical Menu-->
+
+          <h3>Categories</h3>
+          <!--Vertical Menu-->
+          <ul class="vert-nav-ul">
+            {% for blogCategory in blogCategories %}
+            <li><a title="{{blogCategory.title}}" href="{{generatePath( app.request, 6, {'blogcategory_slug': blogCategory.slug}  )}}">{{blogCategory.title}} ({{blogCategory.getBlogPosts|length}})</a></li>
+            {% endfor %}
+          </ul>
+          <!--End Vertical Menu-->
+
+          <h3>Blogroll</h3>
+          <!--Vertical Menu-->
+          <ul class="vert-nav-ul">
+            <li><a title="one" href="#">Here is a link</a></li>
+            <li><a title="two" href="#">There is another</a></li>
+          </ul>
+          <!--End Vertical Menu-->

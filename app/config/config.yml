@@ -21,7 +21,7 @@ parameters:
     locale: en
     sitename: "ProtoCMS Demo"
     siteurl: "protocms-demo.dev"
-    multilingual: true
+    multilingual: false
     email_norely: "noreply@sym3cms.dev"
 
 gregwar_image:

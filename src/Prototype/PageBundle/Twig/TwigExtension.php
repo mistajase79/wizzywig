@@ -45,8 +45,66 @@ class TwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('allowInlineEditor', array($this, 'allowInlineEditor')),
             new \Twig_SimpleFunction('showAdminControlLinks', array($this, 'showAdminControlLinks')),
             new \Twig_SimpleFunction('moneyFormat', array($this, 'moneyFormat')),
-			new \Twig_SimpleFunction('domCheckIgnore', array($this, 'domCheckIgnore')),
+            new \Twig_SimpleFunction('domCheckIgnore', array($this, 'domCheckIgnore')),
+            new \Twig_SimpleFunction('pcgcComponentEntities', array($this, 'pcgcComponentEntities')),
+            new \Twig_SimpleFunction('pcgcComponentEntity', array($this, 'pcgcComponentEntity')),
+            new \Twig_SimpleFunction('replaceIfComponentDataExists', array($this, 'replaceIfComponentDataExists')),
         );
+    }
+
+    public function pcgcComponentEntities($entityName=null, $field=null, $pageComponents){
+
+        $checkfield = substr($field, 0, 3);
+        if($checkfield !='get'){
+          $field = 'get'.ucwords($field);
+        }
+        foreach($pageComponents as $component){
+          if(strtolower($component['urlKey']) == strtolower($entityName)){
+            if(method_exists($component['entity'], $field)){
+                $data = call_user_func(array($component['entity'], $field));
+                echo $data;
+            }
+          }
+        }
+    }
+
+    public function replaceIfComponentDataExists($pageComponents,$field=null, $fallback=null){
+
+        $data = null;
+        $checkfield = substr($field, 0, 3);
+        if($checkfield !='get'){
+          $field = 'get'.ucwords($field);
+        }
+        foreach($pageComponents as $component){
+          if($component['urlKey'] != null && $component['data'] != null){
+            if(method_exists($component['entity'], $field)){
+                $data = call_user_func(array($component['entity'], $field));
+            }
+          }
+        }
+
+        if($data == null){
+          echo $fallback;
+        }else{
+          echo $data;
+        }
+
+    }
+
+    public function pcgcComponentEntity($field=null, $pageComponents){
+
+        $checkfield = substr($field, 0, 3);
+        if($checkfield !='get'){
+          $field = 'get'.ucwords($field);
+        }
+        foreach($pageComponents as $component){
+          if($component['urlKey'] != null && $component['data'] != null){
+            if(method_exists($component['entity'], $field)){
+                $data = call_user_func(array($component['entity'], $field));
+                echo $data;
+            }
+          }
+        }
     }
 
     public function moneyFormat($number){

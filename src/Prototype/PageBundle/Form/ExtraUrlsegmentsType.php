@@ -62,6 +62,7 @@ class ExtraUrlsegmentsType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 
+    //echo "<pre>".print_r($options['cmsComponentArray'], true)."</pre>";
 		$componentChoices = array();
 		foreach($options['cmsComponentArray'] as $cmsComponent){
 			if($cmsComponent['componentType'] =='segment'){

@@ -105,7 +105,7 @@ class DefaultController extends Controller
             );
         }
 
-        $content = "<ul class=\"nav navbar-nav\">\n\r";
+        $content = '<ul id="horz-nav-ul" class="nav navbar-nav sf-menu sf-js-enabled sf-shadow">';
         $content .= $this->makeBootstrapMenu($items, 0, 0, count($menuData),$currentUrl);
         $content .= "</ul>\n\r";
 
