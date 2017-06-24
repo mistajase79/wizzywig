@@ -27,29 +27,29 @@ class DefaultController extends Controller
      */
     public function showAdminHeaderAction($request = null)
     {
-		if ($this->get('security.authorization_checker')->isGranted('ROLE_CMS_ACCESS')) {
-			//add any logic for admin header elements - ie notifications
-            $em = $this->getDoctrine()->getManager();
-            $messages = $em->getRepository('PrototypeEnquiryBundle:Enquiry')->findBy(array('deleted'=>false, 'viewed'=>false));
+    		if ($this->get('security.authorization_checker')->isGranted('ROLE_CMS_ACCESS')) {
+    			//add any logic for admin header elements - ie notifications
+                $em = $this->getDoctrine()->getManager();
+                $messages = $em->getRepository('PrototypeEnquiryBundle:Enquiry')->findBy(array('deleted'=>false, 'viewed'=>false));
 
-            //notifications and flags left for future use
-            $notifications = array();
-            $alerts = array();
+                //notifications and flags left for future use
+                $notifications = array();
+                $alerts = array();
 
-            //used for hiding top admin bar on frontend
-            $isControlDash = true;
+                //used for hiding top admin bar on frontend
+                $isControlDash = true;
 
-        	return $this->render('PrototypeAdminBundle:Control:header.html.twig', array(
-                'request' => $request,
-                'messages' => $messages,
-                'notifications' => $notifications,
-                'alerts' => $alerts,
-                'isControlDash' => $isControlDash
-                )
-            );
-		}else{
-			return new Response('');
-		}
+            	return $this->render('PrototypeAdminBundle:Control:header.html.twig', array(
+                    'request' => $request,
+                    'messages' => $messages,
+                    'notifications' => $notifications,
+                    'alerts' => $alerts,
+                    'isControlDash' => $isControlDash
+                    )
+                );
+    		}else{
+    			return new Response('');
+    		}
     }
 
 }

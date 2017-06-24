@@ -29,7 +29,7 @@ $(function()
                 toolbar: true,
                 clickToEdit: true,
                 buttons: ['format', 'bold', 'italic'],
-                plugins: ['table','cleaner','source'],
+                plugins: ['table','cleaner','source','alignment'],
                 codemirror: {
                     lineNumbers: true,
                     mode: 'xml',

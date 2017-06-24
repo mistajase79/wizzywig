@@ -1197,4 +1197,6 @@ a.button-link:hover, a.more-link:hover {
 	background-image: none;
 }
 
-ul li{ color: #fff;}
+ul li, figure figcaption{ color: #fff;}
+figure { padding:10px;}
+figure figcaption { font-style: italic; font-size: 12px;}

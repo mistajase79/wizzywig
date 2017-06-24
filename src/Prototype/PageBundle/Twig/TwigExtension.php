@@ -58,11 +58,13 @@ class TwigExtension extends \Twig_Extension
         if($checkfield !='get'){
           $field = 'get'.ucwords($field);
         }
-        foreach($pageComponents as $component){
-          if(strtolower($component['urlKey']) == strtolower($entityName)){
-            if(method_exists($component['entity'], $field)){
-                $data = call_user_func(array($component['entity'], $field));
-                echo $data;
+        if(isset($component['urlKey'])){
+          foreach($pageComponents as $component){
+            if(strtolower($component['urlKey']) == strtolower($entityName)){
+              if(method_exists($component['entity'], $field)){
+                  $data = call_user_func(array($component['entity'], $field));
+                  echo $data;
+              }
             }
           }
         }
@@ -76,7 +78,7 @@ class TwigExtension extends \Twig_Extension
           $field = 'get'.ucwords($field);
         }
         foreach($pageComponents as $component){
-          if($component['urlKey'] != null && $component['data'] != null){
+          if((isset($component['urlKey']) && $component['urlKey'] != null) && $component['data'] != null){
             if(method_exists($component['entity'], $field)){
                 $data = call_user_func(array($component['entity'], $field));
             }
@@ -98,7 +100,7 @@ class TwigExtension extends \Twig_Extension
           $field = 'get'.ucwords($field);
         }
         foreach($pageComponents as $component){
-          if($component['urlKey'] != null && $component['data'] != null){
+          if((isset($component['urlKey']) && $component['urlKey'] != null) && $component['data'] != null){
             if(method_exists($component['entity'], $field)){
                 $data = call_user_func(array($component['entity'], $field));
                 echo $data;

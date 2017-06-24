@@ -61,24 +61,24 @@ class ImageManager
         switch ($ext) {
             case "png":
                 $image->open($folder.$this->getThumbnail())
-                    ->cropResize(105, 105)->fixOrientation()
-                    ->fillBackground('transparent')
+                    ->scaleResize(105, 105)->fixOrientation()
+                    ->fillBackground('#fff')
                     ->save($folder.$this->getThumbnail(), 'png', 80);
             case "gif":
                 $image->open($folder.$this->getThumbnail())
-                    ->cropResize(105, 105)->fixOrientation()
-                    ->fillBackground('transparent')
+                    ->scaleResize(105, 105)->fixOrientation()
+                    ->fillBackground('#fff')
                     ->save($folder.$this->getThumbnail(), 'gif', 80);
                 break;
             case "jpg":
                 $image->open($folder.$this->getThumbnail())
-                    ->cropResize(105, 105)->fixOrientation()
+                    ->scaleResize(105, 105)->fixOrientation()
                     ->fillBackground('#fff')
                     ->save($folder.$this->getThumbnail(), 'jpg', 80);
                 break;
             default:
                 $image->open($folder.$this->getThumbnail())
-                    ->cropResize(105, 105)->fixOrientation()
+                    ->scaleResize(105, 105)->fixOrientation()
                     ->fillBackground('#fff')
                     ->save($folder.$this->getThumbnail(), 'jpg', 80, '#fff');
         }

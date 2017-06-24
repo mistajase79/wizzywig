@@ -133,4 +133,60 @@ class ImageManagerController extends Controller
         return $errors;
     }
 
+
+    /**
+     * Ajax Image Upload
+     * @Route("/redactor-upload", name="control_redactor_uploadfile")
+     */
+    public function redactorUploadFileAction(Request $request)
+    {
+
+        $response=array();
+        $errors=0;
+
+        $dir = '/userfiles/images/redactor/';
+        $fileObj = $request->files->get('file');
+
+        // $class_methods = get_class_methods($fileObj);
+        // foreach ($class_methods as $method_name) {
+        //     echo "$method_name\n";
+        // }
+
+        $allowedTypes = array('image/png','image/jpg','image/gif','image/jpeg','image/pjpeg');
+
+        if (!in_array(strtolower($fileObj->getMimeType()), $allowedTypes)){
+          $errors++;
+          $response = array(
+              'error' => 'Image type not recognized (png, jpg, gif allowed)'
+          );
+        }
+
+        if($fileObj->getClientSize() > 1000000 ){
+          $errors++;
+          $response = array(
+              'error' => 'Image too large (1MB+)',
+              'anothermessage' => 'Please consider loading times'
+          );
+        }
+
+        if($errors ==0){
+          $filename = $fileObj->getClientOriginalName();
+          $filenameChunks = explode('.', $filename);
+          $file = $filenameChunks[0].'-'.date('dmyhi').'.'.end($filenameChunks);
+
+          $fileObj->move(getcwd().$dir,$file);
+
+          $response = array(
+              'url' => $dir.$file
+          );
+        }
+
+        return new Response(stripslashes(json_encode($response)));
+
+    }
+
+
+
+
+
 }

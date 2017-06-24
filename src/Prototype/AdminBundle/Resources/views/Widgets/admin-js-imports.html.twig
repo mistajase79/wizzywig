@@ -1,5 +1,5 @@
 {% if is_granted('ROLE_CMS_ACCESS') %}
-   
+
     {# ADMIN LTE #}
     <!-- <script src="{{ asset('/control/adminlte/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script> -->
     <script src="{{ asset('/control/adminlte/dist/js/app.min.js')}}"></script>
@@ -10,6 +10,7 @@
         <script src="{{ asset('/control/adminlte/plugins/redactor2/plugins/table.js')}}"></script>
         <script src="{{ asset('/control/adminlte/plugins/redactor2/plugins/source.js')}}"></script>
         <script src="{{ asset('/control/adminlte/plugins/redactor2/plugins/cleaner.js')}}"></script>
+        <script src="{{ asset('/control/adminlte/plugins/redactor2/plugins/alignment.js')}}"></script>
         <script src="{{ asset('/js/pcgc-inline-editor.js')}}"></script>
 
         {#
@@ -18,5 +19,5 @@
         <script src="{{ asset('/control/adminlte/plugins/redactor2/plugins/codemirror.js')}}"></script>
         #}
     {% endif %}
-    
+
 {% endif %}

@@ -1,10 +1,10 @@
 // general CMS functionality
 
 $(document).ready(function() {
-	$('.datatable').dataTable({
-		"lengthMenu":  [50, 100, 250, "All"],
-		"lengthChange":  false
-	});
+  $('.datatable').dataTable({
+  "lengthMenu":  [50, 100, 250, "All"],
+  "lengthChange":  false
+  });
 
 
     $("#jstree").jstree({
@@ -19,7 +19,10 @@ $(document).ready(function() {
 
 
     $('[data-fieldtype="redactor"]').redactor({
-        plugins: ['table', 'codemirror'],
+        plugins: ['table', 'codemirror', 'imagemanager','alignment'],
+        imageUpload: '/control/redactor-upload',
+        imageResizable: true,
+        imagePosition: true,
         codemirror: {
             lineNumbers: true,
             mode: 'xml',

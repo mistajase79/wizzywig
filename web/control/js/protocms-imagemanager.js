@@ -134,9 +134,13 @@ $(document).on('change', '#uploadfileInput', function(){
                        $('#imagemanager-message').text('Error: ' + error);
                     });
                }else{
-                    folderContents += "<div class='imagemanager-image' data-selected='false' data-filename='"+response.data.name+"'><img src='"+response.data.icon+"' width='105px' height='105px' /><br/><span>"+truncateString(response.data.name, 18)+"</span></div>";
+                    $('.imagemanager-image').each(function() {
+                      $( this ).attr('data-selected', 'false' );
+                    });
+                    folderContents += "<div class='imagemanager-image' data-selected='true' data-filename='"+response.data.name+"'><img src='"+response.data.icon+"' width='105px' height='105px' /><br/><span>"+truncateString(response.data.name, 18)+"</span></div>";
                     $('#folder-content').prepend(folderContents);
                     $('#folder-content').animate({scrollTop: 0}, 200);
+                    $('#selected-image').val(response.data.name);
                }
 
                //clear file input - had to do thing this way due to IE
